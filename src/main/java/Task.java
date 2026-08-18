@@ -30,9 +30,10 @@ public class Task {
     }
 
     /**
-     * Returns the task in list form, for example {@code [X] read book}.
+     * Returns the status icon and description, for example {@code [ ] borrow book}.
      */
-    public String toDisplayString() {
+    @Override
+    public String toString() {
         return "[" + getStatusIcon() + "] " + description;
     }
 }

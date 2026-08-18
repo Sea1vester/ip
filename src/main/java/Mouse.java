@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -8,6 +6,7 @@ import java.util.Scanner;
 public class Mouse {
     private static final String LINE = "    " + "_".repeat(60);
     private static final String INDENT = "     ";
+    private static final int MAX_TASKS = 100;
 
     public static void main(String[] args) {
         printGreeting();
@@ -33,11 +32,12 @@ public class Mouse {
     }
 
     /**
-     * Adds tasks, lists them, marks or unmarks them, and exits on {@code bye}.
+     * Adds todos, deadlines, and events; lists, marks, and unmarks them; exits on {@code bye}.
      */
     private static void handleCommands() {
         Scanner scanner = new Scanner(System.in);
-        List<Task> tasks = new ArrayList<>();
+        Task[] tasks = new Task[MAX_TASKS];
+        int taskCount = 0;
         while (true) {
             String input = scanner.nextLine();
 
@@ -47,49 +47,92 @@ public class Mouse {
             }
 
             if (input.equals("list")) {
-                printList(tasks);
+                printList(tasks, taskCount);
             } else if (input.startsWith("mark ")) {
-                markTask(tasks, input);
+                markTask(tasks, taskCount, input);
             } else if (input.startsWith("unmark ")) {
-                unmarkTask(tasks, input);
-            } else {
-                Task task = new Task(input);
-                tasks.add(task);
-                printReply("added: " + task.getDescription());
+                unmarkTask(tasks, taskCount, input);
+            } else if (input.startsWith("todo ")) {
+                taskCount = addTodo(tasks, taskCount, input);
+            } else if (input.startsWith("deadline ")) {
+                taskCount = addDeadline(tasks, taskCount, input);
+            } else if (input.startsWith("event ")) {
+                taskCount = addEvent(tasks, taskCount, input);
             }
         }
     }
 
     /**
+     * Adds a todo from {@code todo DESCRIPTION}.
+     */
+    private static int addTodo(Task[] tasks, int taskCount, String input) {
+        String description = input.substring("todo ".length()).trim();
+        return addTask(tasks, taskCount, new ToDo(description));
+    }
+
+    /**
+     * Adds a deadline from {@code deadline DESCRIPTION /by WHEN}.
+     */
+    private static int addDeadline(Task[] tasks, int taskCount, String input) {
+        String rest = input.substring("deadline ".length()).trim();
+        int byIndex = rest.indexOf("/by");
+        String description = rest.substring(0, byIndex).trim();
+        String by = rest.substring(byIndex + "/by".length()).trim();
+        return addTask(tasks, taskCount, new Deadline(description, by));
+    }
+
+    /**
+     * Adds an event from {@code event DESCRIPTION /from START /to END}.
+     */
+    private static int addEvent(Task[] tasks, int taskCount, String input) {
+        String rest = input.substring("event ".length()).trim();
+        int fromIndex = rest.indexOf("/from");
+        int toIndex = rest.indexOf("/to");
+        String description = rest.substring(0, fromIndex).trim();
+        String from = rest.substring(fromIndex + "/from".length(), toIndex).trim();
+        String to = rest.substring(toIndex + "/to".length()).trim();
+        return addTask(tasks, taskCount, new Event(description, from, to));
+    }
+
+    private static int addTask(Task[] tasks, int taskCount, Task task) {
+        tasks[taskCount] = task;
+        taskCount++;
+        printReply("Got it. I've added this task:",
+                "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
+        return taskCount;
+    }
+
+    /**
      * Marks the task at the 1-based index in {@code mark N} as done.
      */
-    private static void markTask(List<Task> tasks, String input) {
-        int index = Integer.parseInt(input.substring(5).trim()) - 1;
-        Task task = tasks.get(index);
+    private static void markTask(Task[] tasks, int taskCount, String input) {
+        int index = Integer.parseInt(input.substring("mark ".length()).trim()) - 1;
+        Task task = tasks[index];
         task.markAsDone();
         printReply("Nice! I've marked this task as done:",
-                "  " + task.toDisplayString());
+                "  " + task);
     }
 
     /**
      * Marks the task at the 1-based index in {@code unmark N} as not done.
      */
-    private static void unmarkTask(List<Task> tasks, String input) {
-        int index = Integer.parseInt(input.substring(7).trim()) - 1;
-        Task task = tasks.get(index);
+    private static void unmarkTask(Task[] tasks, int taskCount, String input) {
+        int index = Integer.parseInt(input.substring("unmark ".length()).trim()) - 1;
+        Task task = tasks[index];
         task.markAsNotDone();
         printReply("OK, I've marked this task as not done yet:",
-                "  " + task.toDisplayString());
+                "  " + task);
     }
 
     /**
-     * Prints the numbered task list with done status.
+     * Prints the numbered task list.
      */
-    private static void printList(List<Task> tasks) {
-        String[] lines = new String[tasks.size() + 1];
+    private static void printList(Task[] tasks, int taskCount) {
+        String[] lines = new String[taskCount + 1];
         lines[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < tasks.size(); i++) {
-            lines[i + 1] = (i + 1) + "." + tasks.get(i).toDisplayString();
+        for (int i = 0; i < taskCount; i++) {
+            lines[i + 1] = (i + 1) + "." + tasks[i];
         }
         printReply(lines);
     }
