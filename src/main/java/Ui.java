@@ -49,10 +49,15 @@ public class Ui {
         showReply("Nice! I've marked this task as done:",
                 "  " + task);
     }
+    
 
     public void showUnmarked(Task task) {
         showReply("OK, I've marked this task as not done yet:",
                 "  " + task);
+    }
+
+    public void showError(String errorMessage) {
+        showReply("Meow the cat's cmg, you have screwed up");
     }
 
     /**
