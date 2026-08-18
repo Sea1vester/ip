@@ -14,6 +14,9 @@ public class Mouse {
         handleCommands();
     }
 
+    /**
+     * Prints the startup banner and greeting.
+     */
     private static void printGreeting() {
         String banner = " __  __                      \n"
                 + "|  \\/  | ___  _   _ ___  ___ \n"
@@ -29,10 +32,13 @@ public class Mouse {
         System.out.println(LINE);
     }
 
-
+    /**
+     * Adds tasks, lists them, marks them as done, and exits on {@code bye}.
+     */
     private static void handleCommands() {
         Scanner scanner = new Scanner(System.in);
         List<String> tasks = new ArrayList<>();
+        List<Boolean> isDone = new ArrayList<>();
         while (true) {
             String input = scanner.nextLine();
 
@@ -42,22 +48,46 @@ public class Mouse {
             }
 
             if (input.equals("list")) {
-                printList(tasks);
+                printList(tasks, isDone);
+            } else if (input.startsWith("mark ")) {
+                markTask(tasks, isDone, input);
             } else {
                 tasks.add(input);
+                isDone.add(false);
                 printReply("added: " + input);
             }
         }
     }
 
-    private static void printList(List<String> tasks) {
-        String[] lines = new String[tasks.size()];
+    /**
+     * Marks the task at the 1-based index in {@code mark N} as done.
+     */
+    private static void markTask(List<String> tasks, List<Boolean> isDone, String input) {
+        int index = Integer.parseInt(input.substring(5).trim()) - 1;
+        isDone.set(index, true);
+        printReply("Nice! I've marked this task as done:",
+                "  [" + statusIcon(isDone.get(index)) + "] " + tasks.get(index));
+    }
+
+    /**
+     * Prints the numbered task list with done status.
+     */
+    private static void printList(List<String> tasks, List<Boolean> isDone) {
+        String[] lines = new String[tasks.size() + 1];
+        lines[0] = "Here are the tasks in your list:";
         for (int i = 0; i < tasks.size(); i++) {
-            lines[i] = (i + 1) + ". " + tasks.get(i);
+            lines[i + 1] = (i + 1) + ".[" + statusIcon(isDone.get(i)) + "] " + tasks.get(i);
         }
         printReply(lines);
     }
 
+    private static String statusIcon(boolean done) {
+        return done ? "X" : " ";
+    }
+
+    /**
+     * Prints each message wrapped in horizontal lines.
+     */
     private static void printReply(String... messages) {
         System.out.println(LINE);
         for (String message : messages) {
