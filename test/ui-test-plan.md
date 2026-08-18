@@ -223,22 +223,22 @@ bye
      What can I do for you?
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! The description of a todo cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! The description of a todo cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!
@@ -273,16 +273,16 @@ bye
      What can I do for you?
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! A deadline needs a '/by' time GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! An event needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! An event needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! An event needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -324,13 +324,13 @@ bye
      Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That's not a valid task number GRR
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!
@@ -370,7 +370,7 @@ bye
      Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
      Got it. I've added this task:
@@ -378,7 +378,7 @@ bye
      Now you have 2 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! The description of a todo cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -486,13 +486,13 @@ bye
      Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That's not a valid task number GRR
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!

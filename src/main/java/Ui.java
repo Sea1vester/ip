@@ -63,7 +63,7 @@ public class Ui {
     }
 
     public void showError(String errorMessage) {
-        showReply("Meow the cat's cmg, you have screwed up");
+        showReply("OOPS!!! " + errorMessage);
     }
 
     public void showDeleted(Task task) {
