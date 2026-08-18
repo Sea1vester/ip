@@ -81,6 +81,58 @@ bye
     ____________________________________________________________
 ```
 
+## Test case: add-todo-deadline-event
+
+**Aim:** Add a todo, deadline, and event, then list them to confirm polymorphic display.
+
+**Inputs:**
+
+```text
+todo borrow book
+deadline submit report /by Friday
+event project meeting /from Mon 2pm /to 4pm
+list
+bye
+```
+
+**Expected output:**
+
+```text
+    ____________________________________________________________
+      __  __                      
+     |  \/  | ___  _   _ ___  ___ 
+     | |\/| |/ _ \| | | / __|/ _ \
+     | |  | | (_) | |_| \__ \  __/
+     |_|  |_|\___/ \__,_|___/\___|
+     Hello! I'm Mouse.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] borrow book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] submit report (by: Friday)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][ ] borrow book
+     2.[D][ ] submit report (by: Friday)
+     3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
 ## Test case: list-mark-unmark
 
 **Aim:** Add two tasks, list them, mark the second as done, unmark it, then list again.
