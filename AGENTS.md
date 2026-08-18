@@ -22,6 +22,8 @@ Unless the user says otherwise, assume that you are assisting a student working 
   * Make generated code as self-explanatory as possible, and include explanatory comments where they improve understanding.
   * When faced with a design choice, choose the simplest option that is sufficient for the requirements, while briefly explaining relevant more advanced alternatives.
 
+# Don't leave comments after every single block of code.
+
 # Project-specific requirements
 
 ## Java version:
