@@ -37,6 +37,8 @@ public class Mouse {
                 ui.showMarked(tasks.mark(Parser.parseIndex(input, "mark ")));
             } else if (input.startsWith("unmark ")) {
                 ui.showUnmarked(tasks.unmark(Parser.parseIndex(input, "unmark ")));
+            } else if (input.startsWith("delete ")) {
+                ui.showDeleted(tasks.delete(Parser.parseIndex(input, "delete ")), tasks.size());
             } else if (input.startsWith("todo") && (input.length() == 4 || input.charAt(4) == ' ')) {
                 ui.showAdded(tasks.add(Parser.parseTodo(input)), tasks.size());
             } else if (input.startsWith("deadline ")) {

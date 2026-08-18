@@ -56,8 +56,18 @@ public class Ui {
                 "  " + task);
     }
 
+    public void showDeleted(Task task, int taskCount) {
+        showReply("Noted. I've removed this task:",
+                "  " + task,
+                "Now you have " + taskCount + " tasks in the list.");
+    }
+
     public void showError(String errorMessage) {
         showReply("Meow the cat's cmg, you have screwed up");
+    }
+
+    public void showDeleted(Task task) {
+        showReply("Noted, I've removed this task:", " " + task);
     }
 
     /**

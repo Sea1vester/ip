@@ -1,31 +1,29 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Stores up to {@value #MAX_TASKS} tasks and updates their status.
+ * Stores a dynamic list of tasks and updates their status.
  */
 public class TaskList {
-    private static final int MAX_TASKS = 100;
-
-    private final Task[] tasks;
-    private int taskCount;
+    private final List<Task> tasks;
 
     public TaskList() {
-        this.tasks = new Task[MAX_TASKS];
-        this.taskCount = 0;
+        this.tasks = new ArrayList<>();
     }
 
     public int size() {
-        return taskCount;
+        return tasks.size();
     }
 
     public Task get(int index) {
-        return tasks[index];
+        return tasks.get(index);
     }
 
     /**
      * Adds {@code task} and returns it.
      */
     public Task add(Task task) {
-        tasks[taskCount] = task;
-        taskCount++;
+        tasks.add(task);
         return task;
     }
 
@@ -33,10 +31,10 @@ public class TaskList {
      * Marks the task at the 0-based {@code index} as done.
      */
     public Task mark(int index) {
-        if (index < 0 || index >= taskCount) {
+        if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
-        Task task = tasks[index];
+        Task task = tasks.get(index);
         task.markAsDone();
         return task;
     }
@@ -45,11 +43,21 @@ public class TaskList {
      * Marks the task at the 0-based {@code index} as not done.
      */
     public Task unmark(int index) {
-        if (index < 0 || index >= taskCount) {
+        if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
-        Task task = tasks[index];
+        Task task = tasks.get(index);
         task.markAsNotDone();
         return task;
+    }
+
+    /**
+     * Removes and returns the task at the 0-based {@code index}.
+     */
+    public Task delete(int index) {
+        if (index < 0 || index >= tasks.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        return tasks.remove(index);
     }
 }
