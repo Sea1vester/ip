@@ -5,7 +5,7 @@ This file is the source of truth for Mouse chatbot UI tests. The `test-ui` skill
 ## Program
 
 - Main class: `Mouse`
-- Source files: `src/main/java/Mouse.java`, `src/main/java/Task.java`
+- Source files: `src/main/java/Mouse.java`, `Ui.java`, `Parser.java`, `TaskList.java`, `Task.java`, `ToDo.java`, `Deadline.java`, `Event.java`, `MouseException.java`
 - Java: Azul JDK 25 (`25.0.3.fx-zulu`)
 - Each test case starts a **new** program process, so task lists do not carry over.
 
