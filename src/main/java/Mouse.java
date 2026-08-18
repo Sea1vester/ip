@@ -19,33 +19,46 @@ public class Mouse {
      */
     public void run() {
         ui.showGreeting();
-        while (true) {
-            String input = ui.readCommand();
-            if (input.equals("bye")) {
-                ui.showBye();
-                break;
-            }
-            handleCommand(input);
+        boolean isExit = false;
+        while (!isExit) {
+            isExit = handleCommand(ui.readCommand());
         }
     }
 
-    private void handleCommand(String input) {
+    /**
+     * Handles one command. Returns {@code true} when the session should end.
+     */
+    private boolean handleCommand(String input) {
+        input = input.trim();
         try {
-            if (input.equals("list")) {
+            switch (CommandType.fromInput(input)) {
+            case BYE:
+                ui.showBye();
+                return true;
+            case LIST:
                 ui.showList(tasks);
-            } else if (input.startsWith("mark ")) {
+                break;
+            case MARK:
                 ui.showMarked(tasks.mark(Parser.parseIndex(input, "mark ")));
-            } else if (input.startsWith("unmark ")) {
+                break;
+            case UNMARK:
                 ui.showUnmarked(tasks.unmark(Parser.parseIndex(input, "unmark ")));
-            } else if (input.startsWith("delete ")) {
+                break;
+            case DELETE:
                 ui.showDeleted(tasks.delete(Parser.parseIndex(input, "delete ")), tasks.size());
-            } else if (input.startsWith("todo") && (input.length() == 4 || input.charAt(4) == ' ')) {
+                break;
+            case TODO:
                 ui.showAdded(tasks.add(Parser.parseTodo(input)), tasks.size());
-            } else if (input.startsWith("deadline ")) {
+                break;
+            case DEADLINE:
                 ui.showAdded(tasks.add(Parser.parseDeadline(input)), tasks.size());
-            } else if (input.startsWith("event ")) {
+                break;
+            case EVENT:
                 ui.showAdded(tasks.add(Parser.parseEvent(input)), tasks.size());
-            } else {
+                break;
+            case UNKNOWN:
+                throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
+            default:
                 throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
             }
         } catch (MouseException | IndexOutOfBoundsException e) {
@@ -55,5 +68,6 @@ public class Mouse {
                 ui.showError(e.getMessage());
             }
         }
+        return false;
     }
 }
