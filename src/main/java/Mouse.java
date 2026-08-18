@@ -33,7 +33,7 @@ public class Mouse {
     }
 
     /**
-     * Adds tasks, lists them, marks them as done, and exits on {@code bye}.
+     * Adds tasks, lists them, marks or unmarks them, and exits on {@code bye}.
      */
     private static void handleCommands() {
         Scanner scanner = new Scanner(System.in);
@@ -51,6 +51,8 @@ public class Mouse {
                 printList(tasks, isDone);
             } else if (input.startsWith("mark ")) {
                 markTask(tasks, isDone, input);
+            } else if (input.startsWith("unmark ")) {
+                unmarkTask(tasks, isDone, input);
             } else {
                 tasks.add(input);
                 isDone.add(false);
@@ -66,6 +68,16 @@ public class Mouse {
         int index = Integer.parseInt(input.substring(5).trim()) - 1;
         isDone.set(index, true);
         printReply("Nice! I've marked this task as done:",
+                "  [" + statusIcon(isDone.get(index)) + "] " + tasks.get(index));
+    }
+
+    /**
+     * Marks the task at the 1-based index in {@code unmark N} as not done.
+     */
+    private static void unmarkTask(List<String> tasks, List<Boolean> isDone, String input) {
+        int index = Integer.parseInt(input.substring(7).trim()) - 1;
+        isDone.set(index, false);
+        printReply("OK, I've marked this task as not done yet:",
                 "  [" + statusIcon(isDone.get(index)) + "] " + tasks.get(index));
     }
 
