@@ -1,26 +1,42 @@
-/**
- * Entry point for the Mouse chatbot.
- */
+import java.util.Scanner;
+
 public class Mouse {
+    private static final String LINE = "_".repeat(60);
+
     public static void main(String[] args) {
         printGreeting();
+        echoUntilBye();
     }
 
-    public static void printGreeting() {
+    private static void printGreeting() {
         String banner = " __  __                      \n"
                 + "|  \\/  | ___  _   _ ___  ___ \n"
                 + "| |\\/| |/ _ \\| | | / __|/ _ \\\n"
                 + "| |  | | (_) | |_| \\__ \\  __/\n"
                 + "|_|  |_|\\___/ \\__,_|___/\\___|\n";
-        String greeting = "____________________________________________________________\n"
-        + banner + "\n"
-        + "Hello! I'm Mouse.\n"
-        + "What can I do for you?\n"
-        + "____________________________________________________________\n"
-        + "Bye. Hope to see you again soon!\n"
-        + "____________________________________________________________\n";
-        System.out.println(greeting);
+        System.out.println(LINE);
+        System.out.print(banner);
+        System.out.println("Hello! I'm Mouse.");
+        System.out.println("What can I do for you?");
+        System.out.println(LINE);
+    }
+
+    private static void echoUntilBye() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equals("bye")) {
+                printReply("Bye. Hope to see you again soon!");
+                break;
+            }
+            printReply(input);
+        }
+    }
+
+ 
+    private static void printReply(String message) {
+        System.out.println(LINE);
+        System.out.println(message);
+        System.out.println(LINE);
     }
 }
-
-
