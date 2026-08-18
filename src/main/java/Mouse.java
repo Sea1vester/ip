@@ -37,8 +37,7 @@ public class Mouse {
      */
     private static void handleCommands() {
         Scanner scanner = new Scanner(System.in);
-        List<String> tasks = new ArrayList<>();
-        List<Boolean> isDone = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
         while (true) {
             String input = scanner.nextLine();
 
@@ -48,15 +47,15 @@ public class Mouse {
             }
 
             if (input.equals("list")) {
-                printList(tasks, isDone);
+                printList(tasks);
             } else if (input.startsWith("mark ")) {
-                markTask(tasks, isDone, input);
+                markTask(tasks, input);
             } else if (input.startsWith("unmark ")) {
-                unmarkTask(tasks, isDone, input);
+                unmarkTask(tasks, input);
             } else {
-                tasks.add(input);
-                isDone.add(false);
-                printReply("added: " + input);
+                Task task = new Task(input);
+                tasks.add(task);
+                printReply("added: " + task.getDescription());
             }
         }
     }
@@ -64,37 +63,35 @@ public class Mouse {
     /**
      * Marks the task at the 1-based index in {@code mark N} as done.
      */
-    private static void markTask(List<String> tasks, List<Boolean> isDone, String input) {
+    private static void markTask(List<Task> tasks, String input) {
         int index = Integer.parseInt(input.substring(5).trim()) - 1;
-        isDone.set(index, true);
+        Task task = tasks.get(index);
+        task.markAsDone();
         printReply("Nice! I've marked this task as done:",
-                "  [" + statusIcon(isDone.get(index)) + "] " + tasks.get(index));
+                "  " + task.toDisplayString());
     }
 
     /**
      * Marks the task at the 1-based index in {@code unmark N} as not done.
      */
-    private static void unmarkTask(List<String> tasks, List<Boolean> isDone, String input) {
+    private static void unmarkTask(List<Task> tasks, String input) {
         int index = Integer.parseInt(input.substring(7).trim()) - 1;
-        isDone.set(index, false);
+        Task task = tasks.get(index);
+        task.markAsNotDone();
         printReply("OK, I've marked this task as not done yet:",
-                "  [" + statusIcon(isDone.get(index)) + "] " + tasks.get(index));
+                "  " + task.toDisplayString());
     }
 
     /**
      * Prints the numbered task list with done status.
      */
-    private static void printList(List<String> tasks, List<Boolean> isDone) {
+    private static void printList(List<Task> tasks) {
         String[] lines = new String[tasks.size() + 1];
         lines[0] = "Here are the tasks in your list:";
         for (int i = 0; i < tasks.size(); i++) {
-            lines[i + 1] = (i + 1) + ".[" + statusIcon(isDone.get(i)) + "] " + tasks.get(i);
+            lines[i + 1] = (i + 1) + "." + tasks.get(i).toDisplayString();
         }
         printReply(lines);
-    }
-
-    private static String statusIcon(boolean done) {
-        return done ? "X" : " ";
     }
 
     /**
