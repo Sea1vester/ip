@@ -93,7 +93,7 @@ def command_lines(inputs: str) -> list[str]:
     return lines
 
 
-def run_case(inputs: str) -> tuple[str, int]:
+def run_case(inputs: str) -> tuple[str, str, int]:
     stdin = normalize(inputs)
     if not stdin.endswith("\n"):
         stdin += "\n"
@@ -104,7 +104,7 @@ def run_case(inputs: str) -> tuple[str, int]:
         text=True,
         cwd=REPO,
     )
-    return normalize(result.stdout), result.returncode
+    return normalize(result.stdout), normalize(result.stderr), result.returncode
 
 
 def session_record(commands: list[str], output: str) -> str:
@@ -112,7 +112,7 @@ def session_record(commands: list[str], output: str) -> str:
     return f"Console input:\n{typed}\n\nConsole output:\n{output}"
 
 
-def report_failure(case: dict[str, str], actual: str, expected: str) -> None:
+def report_failure(case: dict[str, str], actual: str, expected: str, stderr: str = "") -> None:
     diff = "".join(
         unified_diff(
             expected.splitlines(keepends=True),
@@ -130,6 +130,10 @@ def report_failure(case: dict[str, str], actual: str, expected: str) -> None:
     print()
     print("Actual output:")
     print(actual, end="" if actual.endswith("\n") else "\n")
+    if stderr.strip():
+        print()
+        print("Stderr:")
+        print(stderr, end="" if stderr.endswith("\n") else "\n")
     if diff:
         print()
         print("Diff:")
@@ -157,17 +161,17 @@ def main() -> int:
         commands = command_lines(case["inputs"])
         print(f"[{index}/{len(cases)}] {case['name']}")
         print(f"Aim: {case['aim']}")
-        actual, code = run_case(case["inputs"])
+        actual, stderr, code = run_case(case["inputs"])
         expected = normalize(case["expected"])
         print()
         print(session_record(commands, actual))
         print()
         if code != 0:
             print(f"Program exited with status {code}")
-            report_failure(case, actual, expected)
+            report_failure(case, actual, expected, stderr)
             return 1
         if actual != expected:
-            report_failure(case, actual, expected)
+            report_failure(case, actual, expected, stderr)
             return 1
         print("PASS")
         print()
