@@ -33,6 +33,9 @@ public class TaskList {
      * Marks the task at the 0-based {@code index} as done.
      */
     public Task mark(int index) {
+        if (index < 0 || index >= taskCount) {
+            throw new IndexOutOfBoundsException();
+        }
         Task task = tasks[index];
         task.markAsDone();
         return task;
@@ -42,6 +45,9 @@ public class TaskList {
      * Marks the task at the 0-based {@code index} as not done.
      */
     public Task unmark(int index) {
+        if (index < 0 || index >= taskCount) {
+            throw new IndexOutOfBoundsException();
+        }
         Task task = tasks[index];
         task.markAsNotDone();
         return task;
