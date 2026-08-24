@@ -1,3 +1,5 @@
+package mouse.task;
+
 /**
  * The three kinds of tasks Mouse can store.
  */

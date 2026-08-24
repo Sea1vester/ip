@@ -1,3 +1,5 @@
+package mouse.task;
+
 /**
  * A task that starts and ends at given dates or times.
  */

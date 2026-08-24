@@ -1,3 +1,10 @@
+package mouse.parser;
+
+import mouse.MouseException;
+import mouse.task.Deadline;
+import mouse.task.Event;
+import mouse.task.ToDo;
+
 /**
  * Extracts command details from a raw user input line.
  */

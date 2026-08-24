@@ -5,7 +5,7 @@
       "type": "java",
       "name": "Run Mouse",
       "request": "launch",
-      "mainClass": "Mouse",
+      "mainClass": "mouse.Mouse",
       "cwd": "${workspaceFolder}"
     }
   ]

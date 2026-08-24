@@ -1,3 +1,10 @@
+package mouse;
+
+import mouse.parser.CommandType;
+import mouse.parser.Parser;
+import mouse.task.TaskList;
+import mouse.ui.Ui;
+
 /**
  * Entry point for the Mouse chatbot. Coordinates the UI, parser, and task list.
  */
