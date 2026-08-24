@@ -16,6 +16,9 @@ public enum CommandType {
 
     /**
      * Identifies the command from a raw input line.
+     *
+     * @param input Raw user input.
+     * @return Matching command type, or {@link #UNKNOWN} if none match.
      */
     public static CommandType fromInput(String input) {
         String trimmed = input.trim();

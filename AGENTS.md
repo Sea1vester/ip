@@ -18,7 +18,8 @@ Unless the user says otherwise, assume that you are assisting a student working 
 * Keep explanations brief but instructive, supporting learning through responsible use of AI. For example:
 
   * When suggesting a Git command, concisely explain what it does.
-  * Add explanatory Javadoc comments to all classes and to nontrivial methods and fields when their purpose or behavior is not obvious.
+  * Follow the project skill `.cursor/skills/seedu-java-coding-standard/SKILL.md` for all Java.
+* Follow the project skill `.cursor/skills/seedu-git-standard/SKILL.md` for all commits and branch names.
   * Make generated code as self-explanatory as possible, and include explanatory comments where they improve understanding.
   * When faced with a design choice, choose the simplest option that is sufficient for the requirements, while briefly explaining relevant more advanced alternatives.
 
@@ -32,9 +33,17 @@ Ensure that Java 25 is used when running the application or build tasks. On macO
 
 ## Git
 
+Follow the project skill `.cursor/skills/seedu-git-standard/SKILL.md` (SE-EDU Git conventions) for every commit message and branch name.
 Use lightweight tags unless the user requests an annotated tag.
-When proposing or creating a commit message, include enough detail to explain the rationale for the change.
+When proposing or creating a commit message, include enough detail to explain the rationale for the change (WHAT and WHY).
 Do not commit or push unless explicitly asked.
+
+## Java coding standard
+
+Follow the project skill `.cursor/skills/seedu-java-coding-standard/SKILL.md` for all Java in this project.
+That skill encodes SE-EDU basic + intermediate rules (https://se-education.org/guides/conventions/java/intermediate.html).
+Apply it when writing, editing, or reviewing `src/main/java` and `src/test/java` code.
+
 
 ## Testing (JUnit)
 
