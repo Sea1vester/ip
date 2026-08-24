@@ -114,7 +114,7 @@ public class Parser {
     public static int parseIndex(String input, String prefix) throws MouseException {
         try {
             return Integer.parseInt(input.substring(prefix.length()).trim()) - 1;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException exception) {
             throw new MouseException("That's not a valid task number GRR");
         }
     }

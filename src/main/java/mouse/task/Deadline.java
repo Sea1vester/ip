@@ -45,10 +45,10 @@ public class Deadline extends Task {
                 this.dateTime = null;
                 try {
                     this.date = LocalDate.parse(by, DATE_IN);
-                } catch (DateTimeParseException e3) {
+                } catch (DateTimeParseException dateException) {
                     try {
                         this.date = LocalDate.parse(by, DATE_IN_SLASH);
-                    } catch (DateTimeParseException e4) {
+                    } catch (DateTimeParseException slashDateException) {
                         this.date = null;
                         this.byText = by;
                     }

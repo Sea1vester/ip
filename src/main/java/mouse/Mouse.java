@@ -84,11 +84,11 @@ public class Mouse {
             default:
                 throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
             }
-        } catch (MouseException | IndexOutOfBoundsException e) {
-            if (e instanceof IndexOutOfBoundsException) {
+        } catch (MouseException | IndexOutOfBoundsException exception) {
+            if (exception instanceof IndexOutOfBoundsException) {
                 ui.showError("That task does not exist GRR");
             } else {
-                ui.showError(e.getMessage());
+                ui.showError(exception.getMessage());
             }
         }
         return false;
