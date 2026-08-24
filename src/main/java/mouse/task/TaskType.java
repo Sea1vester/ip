@@ -16,6 +16,8 @@ public enum TaskType {
 
     /**
      * Returns the letter shown in the task list, for example {@code T} in {@code [T]}.
+     *
+     * @return Single-letter type symbol.
      */
     public String getSymbol() {
         return symbol;

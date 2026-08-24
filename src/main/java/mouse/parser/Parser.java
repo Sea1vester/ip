@@ -11,18 +11,21 @@ import mouse.task.ToDo;
 public class Parser {
     /**
      * Parses {@code todo DESCRIPTION} into a {@link ToDo}.
+     *
+     * @param input Full command line starting with {@code todo}.
+     * @return Parsed to-do task.
+     * @throws MouseException If the description is missing or empty.
      */
     public static ToDo parseTodo(String input) throws MouseException {
-        // If they just type "todo" or "todo ", this handles it without crashing
         if (input.trim().equals("todo")) {
             throw new MouseException("The description of a todo cannot be empty GRR");
         }
-        
+
         String description = input.substring("todo ".length()).trim();
         if (description.isEmpty()) {
             throw new MouseException("The description of a todo cannot be empty GRR");
         }
-        
+
         return new ToDo(description);
     }
 
@@ -46,6 +49,10 @@ public class Parser {
 
     /**
      * Parses {@code deadline DESCRIPTION /by WHEN} into a {@link Deadline}.
+     *
+     * @param input Full command line starting with {@code deadline}.
+     * @return Parsed deadline task.
+     * @throws MouseException If {@code /by}, the description, or the time is missing.
      */
     public static Deadline parseDeadline(String input) throws MouseException {
         String rest = input.substring("deadline ".length()).trim();
@@ -66,6 +73,10 @@ public class Parser {
 
     /**
      * Parses {@code event DESCRIPTION /from START /to END} into an {@link Event}.
+     *
+     * @param input Full command line starting with {@code event}.
+     * @return Parsed event task.
+     * @throws MouseException If delimiters, description, or times are invalid.
      */
     public static Event parseEvent(String input) throws MouseException {
         String rest = input.substring("event ".length()).trim();
@@ -93,7 +104,12 @@ public class Parser {
     }
 
     /**
-     * Parses the 1-based task number after {@code prefix}, as a 0-based index.
+     * Parses the 1-based task number after {@code prefix} as a 0-based index.
+     *
+     * @param input Full command line, for example {@code mark 2}.
+     * @param prefix Command prefix including the trailing space, for example {@code mark }.
+     * @return Zero-based task index.
+     * @throws MouseException If the number is missing or not an integer.
      */
     public static int parseIndex(String input, String prefix) throws MouseException {
         try {
