@@ -1,3 +1,5 @@
+package mouse.task;
+
 /**
  * A to-do item with a description and done status.
  */

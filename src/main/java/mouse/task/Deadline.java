@@ -1,3 +1,5 @@
+package mouse.task;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +27,7 @@ public class Deadline extends Task {
 
     protected LocalDate date;
     protected LocalDateTime dateTime;
+    protected String byText;
 
     /**
      * Creates a deadline from a date ({@code yyyy-MM-dd}) or date-time ({@code yyyy-MM-dd HHmm}).
@@ -41,7 +44,12 @@ public class Deadline extends Task {
                 try {
                     this.date = LocalDate.parse(by, DATE_IN);
                 } catch (DateTimeParseException e3) {
-                    this.date = LocalDate.parse(by, DATE_IN_SLASH);
+                    try {
+                        this.date = LocalDate.parse(by, DATE_IN_SLASH);
+                    } catch (DateTimeParseException e4) {
+                        this.date = null;
+                        this.byText = by;
+                    }
                 }
             }
         }
@@ -52,8 +60,10 @@ public class Deadline extends Task {
         String output;
         if (dateTime != null) {
             output = dateTime.format(DATE_TIME_OUT);
-        } else {
+        } else if (date != null) {
             output = date.format(DATE_OUT);
+        } else {
+            output = byText;
         }
         return "[" + TaskType.DEADLINE.getSymbol() + "]" + super.toString()
                 + " (by: " + output + ")";

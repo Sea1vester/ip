@@ -22,7 +22,7 @@ REPO = find_repo()
 PLAN = REPO / "test" / "ui-test-plan.md"
 SRC = REPO / "src" / "main" / "java"
 OUT = REPO / "bin"
-MAIN_CLASS = "Mouse"
+MAIN_CLASS = "mouse.Mouse"
 JDK_HINT = Path.home() / ".sdkman" / "candidates" / "java" / "25.0.3.fx-zulu"
 
 
@@ -43,7 +43,7 @@ def java_bin(name: str) -> str:
 
 
 def compile_sources() -> None:
-    sources = sorted(str(path) for path in SRC.glob("*.java"))
+    sources = sorted(str(path) for path in SRC.rglob("*.java"))
     if not sources:
         raise SystemExit(f"error: no Java files in {SRC}")
     OUT.mkdir(parents=True, exist_ok=True)

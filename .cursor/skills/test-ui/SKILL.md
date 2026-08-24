@@ -28,11 +28,11 @@ After testing, show a record of the console input and output so we can see the t
 
 ## Test case rules
 
-- One new `Mouse` process per test case.
+- One new `mouse.Mouse` process per test case.
 - Inputs are sent in order, one line each. Include `bye` when the case should exit cleanly.
 - Expected output is exact console text (spacing and horizontal lines included).
 - The first failing test case ends the session.
 
 ## Resource
 
-`scripts/run-ui-tests.py` compiles every `src/main/java/*.java` file, reads `test/ui-test-plan.md`, fail-fast compares output, and prints stderr on crashes.
+`scripts/run-ui-tests.py` compiles every `src/main/java/**/*.java` file, reads `test/ui-test-plan.md`, fail-fast compares output, and prints stderr on crashes.

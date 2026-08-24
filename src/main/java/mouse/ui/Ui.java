@@ -1,4 +1,9 @@
+package mouse.ui;
+
 import java.util.Scanner;
+
+import mouse.task.Task;
+import mouse.task.TaskList;
 
 /**
  * Reads user input and prints chatbot replies.

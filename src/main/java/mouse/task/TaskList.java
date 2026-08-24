@@ -1,3 +1,5 @@
+package mouse.task;
+
 import java.util.ArrayList;
 import java.util.List;
 

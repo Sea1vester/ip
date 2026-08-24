@@ -1,3 +1,5 @@
+package mouse.parser;
+
 /**
  * User commands Mouse understands.
  */

@@ -1,3 +1,5 @@
+package mouse.task;
+
 /**
  * A task with no date or time attached.
  */
