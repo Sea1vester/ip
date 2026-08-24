@@ -19,6 +19,9 @@ public class Ui {
 
     private final Scanner scanner;
 
+    /**
+     * Creates a UI that reads from standard input.
+     */
     public Ui() {
         this.scanner = new Scanner(System.in);
     }
@@ -36,47 +39,88 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Reads the next command line from the user.
+     *
+     * @return Raw input line.
+     */
     public String readCommand() {
         return scanner.nextLine();
     }
 
+    /**
+     * Prints the goodbye message.
+     */
     public void showBye() {
         showReply("Bye. Hope to see you again soon!");
     }
 
+    /**
+     * Prints confirmation that a task was added.
+     *
+     * @param task Added task.
+     * @param taskCount Current number of tasks.
+     */
     public void showAdded(Task task, int taskCount) {
         showReply("Got it. I've added this task:",
                 "  " + task,
                 "Now you have " + taskCount + " tasks in the list.");
     }
 
+    /**
+     * Prints confirmation that a task was marked done.
+     *
+     * @param task Marked task.
+     */
     public void showMarked(Task task) {
         showReply("Nice! I've marked this task as done:",
                 "  " + task);
     }
-    
 
+    /**
+     * Prints confirmation that a task was unmarked.
+     *
+     * @param task Unmarked task.
+     */
     public void showUnmarked(Task task) {
         showReply("OK, I've marked this task as not done yet:",
                 "  " + task);
     }
 
+    /**
+     * Prints confirmation that a task was deleted, with the new task count.
+     *
+     * @param task Deleted task.
+     * @param taskCount Remaining number of tasks.
+     */
     public void showDeleted(Task task, int taskCount) {
         showReply("Noted. I've removed this task:",
                 "  " + task,
                 "Now you have " + taskCount + " tasks in the list.");
     }
 
+    /**
+     * Prints an error message wrapped like other replies.
+     *
+     * @param errorMessage Error text without the {@code OOPS!!!} prefix.
+     */
     public void showError(String errorMessage) {
         showReply("OOPS!!! " + errorMessage);
     }
 
+    /**
+     * Prints confirmation that a task was deleted.
+     *
+     * @param task Deleted task.
+     */
     public void showDeleted(Task task) {
         showReply("Noted, I've removed this task:", " " + task);
     }
 
     /**
      * Prints the numbered task list.
+     *
+     * @param tasks Task list to display.
      */
     public void showList(TaskList tasks) {
         String[] lines = new String[tasks.size() + 1];
@@ -89,6 +133,8 @@ public class Ui {
 
     /**
      * Prints each message wrapped in horizontal lines.
+     *
+     * @param messages Lines to print between the borders.
      */
     public void showReply(String... messages) {
         System.out.println(LINE);

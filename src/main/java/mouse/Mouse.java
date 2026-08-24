@@ -6,17 +6,26 @@ import mouse.task.TaskList;
 import mouse.ui.Ui;
 
 /**
- * Entry point for the Mouse chatbot. Coordinates the UI, parser, and task list.
+ * Entry point for the Mouse chatbot.
+ * Coordinates the UI, parser, and task list.
  */
 public class Mouse {
     private final Ui ui;
     private final TaskList tasks;
 
+    /**
+     * Creates a Mouse session with an empty task list.
+     */
     public Mouse() {
         this.ui = new Ui();
         this.tasks = new TaskList();
     }
 
+    /**
+     * Starts the chatbot from the command line.
+     *
+     * @param args Command-line arguments (unused).
+     */
     public static void main(String[] args) {
         new Mouse().run();
     }
@@ -33,7 +42,11 @@ public class Mouse {
     }
 
     /**
-     * Handles one command. Returns {@code true} when the session should end.
+     * Handles one raw command line.
+     * Returns {@code true} when the session should end.
+     *
+     * @param input Raw user input.
+     * @return Whether the chatbot should exit.
      */
     private boolean handleCommand(String input) {
         input = input.trim();
