@@ -11,10 +11,12 @@ public class Deadline extends Task {
             DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter DATE_TIME_IN =
             DateTimeFormatter.ofPattern("yyyy-MM-dd HHmm");
+
     private static final DateTimeFormatter DATE_OUT =
             DateTimeFormatter.ofPattern("MMM dd yyyy");
     private static final DateTimeFormatter DATE_TIME_OUT =
             DateTimeFormatter.ofPattern("MMM dd yyyy, h:mma");
+
     private static final DateTimeFormatter DATE_IN_SLASH = 
             DateTimeFormatter.ofPattern("d/M/yyyy");
     private static final DateTimeFormatter DATE_TIME_IN_SLASH = 
@@ -30,12 +32,12 @@ public class Deadline extends Task {
     public Deadline(String description, String by) {
         super(description);
         try {
-            this.dateTime = LocalDateTime.parse(by, DATE_TIME_IN);
+            this.dateTime = LocalDateTime.parse(by, DATE_TIME_IN); //Does by match yyyy-MM-dd HHmm?
         } catch (DateTimeParseException e1) {
             try {
                 this.dateTime = LocalDateTime.parse(by, DATE_TIME_IN_SLASH);
             } catch (DateTimeParseException e2) {
-                this.dateTime = null;
+                this.dateTime = null; //here!
                 try {
                     this.date = LocalDate.parse(by, DATE_IN);
                 } catch (DateTimeParseException e3) {
