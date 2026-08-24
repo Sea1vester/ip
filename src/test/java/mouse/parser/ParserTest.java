@@ -78,4 +78,15 @@ public class ParserTest {
     public void parseIndex_nonNumeric_throwsMouseException() {
         assertThrows(MouseException.class, () -> Parser.parseIndex("mark abc", "mark "));
     }
+
+    @Test
+    public void parseFind_validKeyword_returnsKeyword() throws MouseException {
+        assertEquals("book", Parser.parseFind("find book"));
+    }
+
+    @Test
+    public void parseFind_emptyKeyword_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseFind("find"));
+        assertThrows(MouseException.class, () -> Parser.parseFind("find   "));
+    }
 }

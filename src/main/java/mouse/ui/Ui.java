@@ -88,6 +88,20 @@ public class Ui {
     }
 
     /**
+     * Prints matching tasks from a find, numbered from 1 among matches only.
+     *
+     * @param matches Tasks that matched the keyword.
+     */
+    public void showFind(TaskList matches) {
+        String[] lines = new String[matches.size() + 1];
+        lines[0] = "Here are the matching tasks in your list:";
+        for (int i = 0; i < matches.size(); i++) {
+            lines[i + 1] = (i + 1) + "." + matches.get(i);
+        }
+        showReply(lines);
+    }
+
+    /**
      * Prints each message wrapped in horizontal lines.
      */
     public void showReply(String... messages) {
@@ -97,4 +111,5 @@ public class Ui {
         }
         System.out.println(LINE);
     }
+
 }

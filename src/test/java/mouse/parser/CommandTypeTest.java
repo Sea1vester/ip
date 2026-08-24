@@ -27,6 +27,8 @@ public class CommandTypeTest {
         assertEquals(CommandType.TODO, CommandType.fromInput("todo read book"));
         assertEquals(CommandType.DEADLINE, CommandType.fromInput("deadline return book /by Sunday"));
         assertEquals(CommandType.EVENT, CommandType.fromInput("event meeting /from Mon /to Tue"));
+        assertEquals(CommandType.FIND, CommandType.fromInput("find"));
+        assertEquals(CommandType.FIND, CommandType.fromInput("find book"));
     }
 
     @Test

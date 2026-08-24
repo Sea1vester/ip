@@ -63,6 +63,9 @@ public class Mouse {
             case EVENT:
                 ui.showAdded(tasks.add(Parser.parseEvent(input)), tasks.size());
                 break;
+            case FIND:
+                ui.showFind(tasks.find(Parser.parseFind(input)));
+                break;
             case UNKNOWN:
                 throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
             default:

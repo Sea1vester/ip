@@ -62,4 +62,22 @@ public class TaskList {
         }
         return tasks.remove(index);
     }
+
+    /**
+     * Returns tasks whose description contains {@code keyword} (case-insensitive).
+     *
+     * @param keyword Text to look for in descriptions.
+     * @return A new list of matching tasks, numbered independently when printed.
+     */
+    public TaskList find(String keyword) {
+        TaskList matches = new TaskList();
+        String needle = keyword.toLowerCase();
+        for (int i = 0; i < tasks.size(); i++) {
+            Task task = tasks.get(i);
+            if (task.getDescription().toLowerCase().contains(needle)) {
+                matches.add(task);
+            }
+        }
+        return matches;
+    }
 }

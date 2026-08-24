@@ -77,4 +77,16 @@ public class TaskListTest {
         assertEquals("a", tasks.get(0).getDescription());
         assertEquals("c", tasks.get(1).getDescription());
     }
+
+    @Test
+    public void find_keywordInDescription_returnsMatchingTasksOnly() {
+        TaskList tasks = new TaskList();
+        tasks.add(new ToDo("read book"));
+        tasks.add(new ToDo("buy bread"));
+        tasks.add(new ToDo("return book"));
+        TaskList matches = tasks.find("book");
+        assertEquals(2, matches.size());
+        assertEquals("read book", matches.get(0).getDescription());
+        assertEquals("return book", matches.get(1).getDescription());
+    }
 }

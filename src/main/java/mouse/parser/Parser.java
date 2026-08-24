@@ -27,6 +27,24 @@ public class Parser {
     }
 
     /**
+     * Parses {@code find KEYWORD} into the search keyword.
+     *
+     * @param input Full command line starting with {@code find}.
+     * @return Keyword to search for.
+     * @throws MouseException If the keyword is missing or empty.
+     */
+    public static String parseFind(String input) throws MouseException {
+        if (input.trim().equals("find")) {
+            throw new MouseException("The find keyword cannot be empty GRR");
+        }
+        String keyword = input.substring("find ".length()).trim();
+        if (keyword.isEmpty()) {
+            throw new MouseException("The find keyword cannot be empty GRR");
+        }
+        return keyword;
+    }
+
+    /**
      * Parses {@code deadline DESCRIPTION /by WHEN} into a {@link Deadline}.
      */
     public static Deadline parseDeadline(String input) throws MouseException {
