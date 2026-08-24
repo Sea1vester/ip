@@ -5,7 +5,7 @@ This file is the source of truth for Mouse chatbot UI tests. The `test-ui` skill
 ## Program
 
 - Main class: `Mouse`
-- Source files: `src/main/java/Mouse.java`, `src/main/java/Task.java`
+- Source files: `src/main/java/Mouse.java`, `Ui.java`, `Parser.java`, `TaskList.java`, `Task.java`, `ToDo.java`, `Deadline.java`, `Event.java`, `MouseException.java`, `CommandType.java`, `TaskType.java`
 - Java: Azul JDK 25 (`25.0.3.fx-zulu`)
 - Each test case starts a **new** program process, so task lists do not carry over.
 
@@ -75,6 +75,58 @@ bye
      Got it. I've added this task:
        [T][ ] read book
      Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+## Test case: add-todo-deadline-event
+
+**Aim:** Add a todo, deadline, and event, then list them to confirm polymorphic display.
+
+**Inputs:**
+
+```text
+todo borrow book
+deadline submit report /by Friday
+event project meeting /from Mon 2pm /to 4pm
+list
+bye
+```
+
+**Expected output:**
+
+```text
+    ____________________________________________________________
+      __  __                      
+     |  \/  | ___  _   _ ___  ___ 
+     | |\/| |/ _ \| | | / __|/ _ \
+     | |  | | (_) | |_| \__ \  __/
+     |_|  |_|\___/ \__,_|___/\___|
+     Hello! I'm Mouse.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] borrow book
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] submit report (by: Friday)
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [E][ ] project meeting (from: Mon 2pm to: 4pm)
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][ ] borrow book
+     2.[D][ ] submit report (by: Friday)
+     3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!
@@ -171,22 +223,22 @@ bye
      What can I do for you?
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! The description of a todo cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! The description of a todo cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!
@@ -221,16 +273,16 @@ bye
      What can I do for you?
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! A deadline needs a '/by' time GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! An event needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! An event needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! An event needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -272,13 +324,13 @@ bye
      Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That's not a valid task number GRR
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!
@@ -318,7 +370,7 @@ bye
      Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
     ____________________________________________________________
     ____________________________________________________________
      Got it. I've added this task:
@@ -326,7 +378,7 @@ bye
      Now you have 2 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! The description of a todo cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
      Here are the tasks in your list:
@@ -434,16 +486,245 @@ bye
      Now you have 1 tasks in the list.
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That task does not exist GRR
     ____________________________________________________________
     ____________________________________________________________
-     Meow the cat's cmg, you have screwed up
+     OOPS!!! That's not a valid task number GRR
     ____________________________________________________________
     ____________________________________________________________
      Bye. Hope to see you again soon!
     ____________________________________________________________
 ```
 
+## Test case: delete-preserves-done-status
+
+**Aim:** Delete a completed task and confirm remaining tasks keep their done status.
+
+**Inputs:**
+
+```text
+todo first
+todo second
+mark 2
+delete 1
+list
+bye
+```
+
+**Expected output:**
+
+```text
+    ____________________________________________________________
+      __  __                      
+     |  \/  | ___  _   _ ___  ___ 
+     | |\/| |/ _ \| | | / __|/ _ \
+     | |  | | (_) | |_| \__ \  __/
+     |_|  |_|\___/ \__,_|___/\___|
+     Hello! I'm Mouse.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] first
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] second
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] second
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [T][ ] first
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][X] second
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+## Test case: delete-then-mark-reindexed
+
+**Aim:** After deleting item 1, mark 2 should affect the task that shifted into that index.
+
+**Inputs:**
+
+```text
+todo a
+todo b
+todo c
+delete 1
+mark 2
+list
+bye
+```
+
+**Expected output:**
+
+```text
+    ____________________________________________________________
+      __  __                      
+     |  \/  | ___  _   _ ___  ___ 
+     | |\/| |/ _ \| | | / __|/ _ \
+     | |  | | (_) | |_| \__ \  __/
+     |_|  |_|\___/ \__,_|___/\___|
+     Hello! I'm Mouse.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] a
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] b
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] c
+     Now you have 3 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [T][ ] a
+     Now you have 2 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Nice! I've marked this task as done:
+       [T][X] c
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[T][ ] b
+     2.[T][X] c
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+## Test case: empty-list
+
+**Aim:** List an empty task list at startup, then again after deleting the only task.
+
+**Inputs:**
+
+```text
+list
+todo only
+delete 1
+list
+bye
+```
+
+**Expected output:**
+
+```text
+    ____________________________________________________________
+      __  __                      
+     |  \/  | ___  _   _ ___  ___ 
+     | |\/| |/ _ \| | | / __|/ _ \
+     | |  | | (_) | |_| \__ \  __/
+     |_|  |_|\___/ \__,_|___/\___|
+     Hello! I'm Mouse.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [T][ ] only
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Noted. I've removed this task:
+       [T][ ] only
+     Now you have 0 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```
+
+## Test case: malformed-commands
+
+**Aim:** Cover malformed delete indexes and incomplete deadline/event delimiters without crashing.
+
+**Inputs:**
+
+```text
+delete
+delete -1
+delete 1 extra
+deadline task /by
+deadline /by Sunday
+event task /from Monday /to
+event task /to 4pm /from Mon
+deadline foo /by a /by b
+list
+bye
+```
+
+**Expected output:**
+
+```text
+    ____________________________________________________________
+      __  __                      
+     |  \/  | ___  _   _ ___  ___ 
+     | |\/| |/ _ \| | | / __|/ _ \
+     | |  | | (_) | |_| \__ \  __/
+     |_|  |_|\___/ \__,_|___/\___|
+     Hello! I'm Mouse.
+     What can I do for you?
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS!!! That task does not exist GRR
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS!!! That's not a valid task number GRR
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS!!! The '/by' time cannot be empty GRR
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS!!! The description of a deadline cannot be empty GRR
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS!!! The '/to' time cannot be empty GRR
+    ____________________________________________________________
+    ____________________________________________________________
+     OOPS!!! The '/from' time must come before the '/to' time GRR
+    ____________________________________________________________
+    ____________________________________________________________
+     Got it. I've added this task:
+       [D][ ] foo (by: a /by b)
+     Now you have 1 tasks in the list.
+    ____________________________________________________________
+    ____________________________________________________________
+     Here are the tasks in your list:
+     1.[D][ ] foo (by: a /by b)
+    ____________________________________________________________
+    ____________________________________________________________
+     Bye. Hope to see you again soon!
+    ____________________________________________________________
+```

@@ -23,7 +23,7 @@ After testing, show a record of the console input and output so we can see the t
    ```
 
 5. Print the runner's full session record in your reply.
-6. If a test case failed, stop. Do not run later cases or "fix forward". Report the actual and expected outputs from the runner. Only continue if the user asks to update the plan or the program.
+6. If a test case failed, stop. Do not run later cases or "fix forward". Report the actual and expected outputs from the runner, including stderr if the program crashed. Only continue if the user asks to update the plan or the program.
 7. If the user supplies new commands and expected outputs, append a new test case to `test/ui-test-plan.md` (aim, inputs, expected output) and re-run.
 
 ## Test case rules
@@ -35,4 +35,4 @@ After testing, show a record of the console input and output so we can see the t
 
 ## Resource
 
-`scripts/run-ui-tests.py` compiles `Mouse` and `Task`, reads `test/ui-test-plan.md`, and fail-fast compares output.
+`scripts/run-ui-tests.py` compiles every `src/main/java/*.java` file, reads `test/ui-test-plan.md`, fail-fast compares output, and prints stderr on crashes.
