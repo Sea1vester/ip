@@ -100,21 +100,21 @@ public class Ui {
     }
 
     /**
-     * Prints an error message wrapped like other replies.
-     *
-     * @param errorMessage Error text without the {@code OOPS!!!} prefix.
-     */
-    public void showError(String errorMessage) {
-        showReply("OOPS!!! " + errorMessage);
-    }
-
-    /**
      * Prints confirmation that a task was deleted.
      *
      * @param task Deleted task.
      */
     public void showDeleted(Task task) {
         showReply("Noted, I've removed this task:", " " + task);
+    }
+
+    /**
+     * Prints an error message wrapped like other replies.
+     *
+     * @param errorMessage Error text without the {@code OOPS!!!} prefix.
+     */
+    public void showError(String errorMessage) {
+        showReply("OOPS!!! " + errorMessage);
     }
 
     /**

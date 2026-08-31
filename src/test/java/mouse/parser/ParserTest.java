@@ -64,8 +64,8 @@ public class ParserTest {
 
     @Test
     public void parseEvent_fromAfterTo_throwsMouseException() {
-        assertThrows(MouseException.class,
-                () -> Parser.parseEvent("event meeting /to 4pm /from Mon"));
+        assertThrows(MouseException.class, () -> Parser.parseEvent(
+                "event meeting /to 4pm /from Mon"));
     }
 
     @Test
