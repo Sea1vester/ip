@@ -30,13 +30,9 @@ public class Ui {
      * Prints the startup banner and greeting.
      */
     public void showGreeting() {
-        System.out.println(LINE);
-        for (String row : BANNER.split("\n")) {
-            System.out.println(INDENT + row);
-        }
-        System.out.println(INDENT + "Hello! I'm Mouse.");
-        System.out.println(INDENT + "What can I do for you?");
-        System.out.println(LINE);
+        showReply(append(BANNER.split("\n"),
+                "Hello! I'm Mouse.",
+                "What can I do for you?"));
     }
 
     /**
@@ -54,7 +50,7 @@ public class Ui {
      * @return Greeting text for a chat bubble.
      */
     public String formatGreeting() {
-        return "Hello! I'm Mouse.\nWhat can I do for you?";
+        return joinLines("Hello! I'm Mouse.", "What can I do for you?");
     }
 
     /**
@@ -74,7 +70,7 @@ public class Ui {
      * @return Confirmation text.
      */
     public String formatAdded(Task task, int taskCount) {
-        return String.join("\n",
+        return joinLines(
                 "Got it. I've added this task:",
                 "  " + task,
                 "Now you have " + taskCount + " tasks in the list.");
@@ -87,7 +83,7 @@ public class Ui {
      * @return Confirmation text.
      */
     public String formatMarked(Task task) {
-        return String.join("\n", "Nice! I've marked this task as done:", "  " + task);
+        return joinLines("Nice! I've marked this task as done:", "  " + task);
     }
 
     /**
@@ -97,7 +93,7 @@ public class Ui {
      * @return Confirmation text.
      */
     public String formatUnmarked(Task task) {
-        return String.join("\n", "OK, I've marked this task as not done yet:", "  " + task);
+        return joinLines("OK, I've marked this task as not done yet:", "  " + task);
     }
 
     /**
@@ -108,7 +104,7 @@ public class Ui {
      * @return Confirmation text.
      */
     public String formatDeleted(Task task, int taskCount) {
-        return String.join("\n",
+        return joinLines(
                 "Noted. I've removed this task:",
                 "  " + task,
                 "Now you have " + taskCount + " tasks in the list.");
@@ -150,7 +146,7 @@ public class Ui {
      * @return Help text.
      */
     public String formatHelp() {
-        return String.join("\n",
+        return joinLines(
                 "Commands:",
                 "• todo DESCRIPTION - Add a to-do",
                 "• deadline DESCRIPTION /by WHEN - Add a deadline (e.g. 2019-12-02)",
@@ -178,9 +174,7 @@ public class Ui {
      * @param taskCount Current number of tasks.
      */
     public void showAdded(Task task, int taskCount) {
-        showReply("Got it. I've added this task:",
-                "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
+        showReply(splitLines(formatAdded(task, taskCount)));
     }
 
     /**
@@ -189,8 +183,7 @@ public class Ui {
      * @param task Marked task.
      */
     public void showMarked(Task task) {
-        showReply("Nice! I've marked this task as done:",
-                "  " + task);
+        showReply(splitLines(formatMarked(task)));
     }
 
     /**
@@ -199,8 +192,7 @@ public class Ui {
      * @param task Unmarked task.
      */
     public void showUnmarked(Task task) {
-        showReply("OK, I've marked this task as not done yet:",
-                "  " + task);
+        showReply(splitLines(formatUnmarked(task)));
     }
 
     /**
@@ -210,9 +202,7 @@ public class Ui {
      * @param taskCount Remaining number of tasks.
      */
     public void showDeleted(Task task, int taskCount) {
-        showReply("Noted. I've removed this task:",
-                "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
+        showReply(splitLines(formatDeleted(task, taskCount)));
     }
 
     /**
@@ -239,12 +229,7 @@ public class Ui {
      * @param tasks Task list to display.
      */
     public void showList(TaskList tasks) {
-        String[] lines = new String[tasks.size() + 1];
-        lines[0] = "Here are the tasks in your list:";
-        for (int i = 0; i < tasks.size(); i++) {
-            lines[i + 1] = (i + 1) + "." + tasks.get(i);
-        }
-        showReply(lines);
+        showReply(numberedLines("Here are the tasks in your list:", tasks));
     }
 
     /**
@@ -253,19 +238,14 @@ public class Ui {
      * @param matches Tasks that matched the keyword.
      */
     public void showFind(TaskList matches) {
-        String[] lines = new String[matches.size() + 1];
-        lines[0] = "Here are the matching tasks in your list:";
-        for (int i = 0; i < matches.size(); i++) {
-            lines[i + 1] = (i + 1) + "." + matches.get(i);
-        }
-        showReply(lines);
+        showReply(numberedLines("Here are the matching tasks in your list:", matches));
     }
 
     /**
      * Prints a short guide to the commands Mouse understands.
      */
     public void showHelp() {
-        showReply(formatHelp().split("\n", -1));
+        showReply(splitLines(formatHelp()));
     }
 
     /**
@@ -282,12 +262,31 @@ public class Ui {
     }
 
     private String formatNumberedTasks(String header, TaskList tasks) {
+        return joinLines(numberedLines(header, tasks));
+    }
+
+    private String joinLines(String... lines) {
+        return String.join("\n", lines);
+    }
+
+    private String[] splitLines(String text) {
+        return text.split("\n", -1);
+    }
+
+    private String[] numberedLines(String header, TaskList tasks) {
         String[] lines = new String[tasks.size() + 1];
         lines[0] = header;
         for (int i = 0; i < tasks.size(); i++) {
             lines[i + 1] = (i + 1) + "." + tasks.get(i);
         }
-        return String.join("\n", lines);
+        return lines;
+    }
+
+    private String[] append(String[] prefix, String... extra) {
+        String[] result = new String[prefix.length + extra.length];
+        System.arraycopy(prefix, 0, result, 0, prefix.length);
+        System.arraycopy(extra, 0, result, prefix.length, extra.length);
+        return result;
     }
 
 }

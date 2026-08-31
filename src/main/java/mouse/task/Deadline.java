@@ -36,25 +36,36 @@ public class Deadline extends Task {
      */
     public Deadline(String description, String by) {
         super(description);
-        try {
-            this.dateTime = LocalDateTime.parse(by, DATE_TIME_IN);
-        } catch (DateTimeParseException e1) {
+        this.dateTime = parseDateTime(by, DATE_TIME_IN, DATE_TIME_IN_SLASH);
+        if (this.dateTime != null) {
+            return;
+        }
+        this.date = parseDate(by, DATE_IN, DATE_IN_SLASH);
+        if (this.date == null) {
+            this.byText = by;
+        }
+    }
+
+    private static LocalDateTime parseDateTime(String by, DateTimeFormatter... formatters) {
+        for (DateTimeFormatter formatter : formatters) {
             try {
-                this.dateTime = LocalDateTime.parse(by, DATE_TIME_IN_SLASH);
-            } catch (DateTimeParseException e2) {
-                this.dateTime = null;
-                try {
-                    this.date = LocalDate.parse(by, DATE_IN);
-                } catch (DateTimeParseException dateException) {
-                    try {
-                        this.date = LocalDate.parse(by, DATE_IN_SLASH);
-                    } catch (DateTimeParseException slashDateException) {
-                        this.date = null;
-                        this.byText = by;
-                    }
-                }
+                return LocalDateTime.parse(by, formatter);
+            } catch (DateTimeParseException exception) {
+                // Try the next formatter.
             }
         }
+        return null;
+    }
+
+    private static LocalDate parseDate(String by, DateTimeFormatter... formatters) {
+        for (DateTimeFormatter formatter : formatters) {
+            try {
+                return LocalDate.parse(by, formatter);
+            } catch (DateTimeParseException exception) {
+                // Try the next formatter.
+            }
+        }
+        return null;
     }
 
     /**
