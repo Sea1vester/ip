@@ -13,6 +13,7 @@ public enum CommandType {
     DEADLINE,
     EVENT,
     FIND,
+    HELP,
     UNKNOWN;
 
     /**
@@ -49,6 +50,9 @@ public enum CommandType {
         }
         if (trimmed.equals("find") || trimmed.startsWith("find ")) {
             return FIND;
+        }
+        if (trimmed.equals("help")) {
+            return HELP;
         }
         return UNKNOWN;
     }

@@ -12,6 +12,7 @@ public class CommandTypeTest {
     public void fromInput_byeAndList_returnsMatchingTypes() {
         assertEquals(CommandType.BYE, CommandType.fromInput("bye"));
         assertEquals(CommandType.LIST, CommandType.fromInput("list"));
+        assertEquals(CommandType.HELP, CommandType.fromInput("help"));
     }
 
     @Test

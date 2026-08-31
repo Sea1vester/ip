@@ -31,6 +31,68 @@ public class Mouse {
     }
 
     /**
+     * Returns the GUI greeting.
+     *
+     * @return Greeting text for a chat bubble.
+     */
+    public String getGreeting() {
+        return ui.formatGreeting();
+    }
+
+    /**
+     * Returns whether {@code input} is the exit command.
+     *
+     * @param input Raw user input.
+     * @return {@code true} if the session should end.
+     */
+    public boolean isExit(String input) {
+        return CommandType.fromInput(input.trim()) == CommandType.BYE;
+    }
+
+    /**
+     * Returns Mouse's reply for one command, for the GUI.
+     *
+     * @param input Raw user input.
+     * @return Reply text to show in a dialog bubble.
+     */
+    public String getResponse(String input) {
+        input = input.trim();
+        try {
+            switch (CommandType.fromInput(input)) {
+            case BYE:
+                return ui.formatBye();
+            case LIST:
+                return ui.formatList(tasks);
+            case MARK:
+                return ui.formatMarked(tasks.mark(Parser.parseIndex(input, "mark ")));
+            case UNMARK:
+                return ui.formatUnmarked(tasks.unmark(Parser.parseIndex(input, "unmark ")));
+            case DELETE:
+                return ui.formatDeleted(tasks.delete(Parser.parseIndex(input, "delete ")), tasks.size());
+            case TODO:
+                return ui.formatAdded(tasks.add(Parser.parseTodo(input)), tasks.size());
+            case DEADLINE:
+                return ui.formatAdded(tasks.add(Parser.parseDeadline(input)), tasks.size());
+            case EVENT:
+                return ui.formatAdded(tasks.add(Parser.parseEvent(input)), tasks.size());
+            case FIND:
+                return ui.formatFind(tasks.find(Parser.parseFind(input)));
+            case HELP:
+                return ui.formatHelp();
+            case UNKNOWN:
+                throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
+            default:
+                throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
+            }
+        } catch (MouseException | IndexOutOfBoundsException exception) {
+            if (exception instanceof IndexOutOfBoundsException) {
+                return ui.formatError("That task does not exist GRR");
+            }
+            return ui.formatError(exception.getMessage());
+        }
+    }
+
+    /**
      * Greets the user, then handles commands until {@code bye}.
      */
     public void run() {
@@ -78,6 +140,9 @@ public class Mouse {
                 break;
             case FIND:
                 ui.showFind(tasks.find(Parser.parseFind(input)));
+                break;
+            case HELP:
+                ui.showHelp();
                 break;
             case UNKNOWN:
                 throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
