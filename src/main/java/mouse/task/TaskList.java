@@ -57,6 +57,7 @@ public class TaskList {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
+        assert index >= 0 && index < tasks.size() : "Mark index should be in range after the bounds check";
         Task task = tasks.get(index);
         task.markAsDone();
         return task;
@@ -73,6 +74,7 @@ public class TaskList {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
+        assert index >= 0 && index < tasks.size() : "Unmark index should be in range after the bounds check";
         Task task = tasks.get(index);
         task.markAsNotDone();
         return task;
@@ -89,6 +91,7 @@ public class TaskList {
         if (index < 0 || index >= tasks.size()) {
             throw new IndexOutOfBoundsException();
         }
+        assert index >= 0 && index < tasks.size() : "Delete index should be in range after the bounds check";
         return tasks.remove(index);
     }
 
