@@ -1,6 +1,7 @@
 package mouse.task;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,6 +24,15 @@ public class TaskList {
      */
     public int size() {
         return tasks.size();
+    }
+
+    /**
+     * Returns an unmodifiable view of the stored tasks.
+     *
+     * @return Tasks in list order.
+     */
+    public List<Task> asList() {
+        return Collections.unmodifiableList(tasks);
     }
 
     /**

@@ -1,25 +1,42 @@
 package mouse;
 
+import java.util.function.Function;
+
 import mouse.parser.CommandType;
 import mouse.parser.Parser;
 import mouse.parser.PriorityCommand;
+import mouse.storage.Storage;
+import mouse.task.Task;
 import mouse.task.TaskList;
 import mouse.ui.Ui;
 
 /**
  * Entry point for the Mouse chatbot.
- * Coordinates the UI, parser, and task list.
+ * Coordinates the UI, parser, storage, and task list.
  */
 public class Mouse {
+    public static final String DEFAULT_SAVE_PATH = "data/mouse.txt";
+
     private final Ui ui;
+    private final Storage storage;
     private final TaskList tasks;
 
     /**
-     * Creates a Mouse session with an empty task list.
+     * Creates a Mouse session that saves to {@link #DEFAULT_SAVE_PATH}.
      */
     public Mouse() {
+        this(DEFAULT_SAVE_PATH);
+    }
+
+    /**
+     * Creates a Mouse session that loads and saves at {@code filePath}.
+     *
+     * @param filePath Path to the save file.
+     */
+    public Mouse(String filePath) {
         this.ui = new Ui();
-        this.tasks = new TaskList();
+        this.storage = new Storage(filePath);
+        this.tasks = storage.load();
     }
 
     /**
@@ -99,25 +116,30 @@ public class Mouse {
             case LIST:
                 return ui.formatList(tasks);
             case MARK:
-                return ui.formatMarked(tasks.mark(Parser.parseIndex(input, "mark ")));
+                return changeTask(tasks.mark(Parser.parseIndex(input, "mark ")),
+                        ui::formatMarked);
             case UNMARK:
-                return ui.formatUnmarked(tasks.unmark(Parser.parseIndex(input, "unmark ")));
+                return changeTask(tasks.unmark(Parser.parseIndex(input, "unmark ")),
+                        ui::formatUnmarked);
             case DELETE:
-                return ui.formatDeleted(tasks.delete(Parser.parseIndex(input, "delete ")), tasks.size());
+                Task deleted = tasks.delete(Parser.parseIndex(input, "delete "));
+                storage.save(tasks);
+                return ui.formatDeleted(deleted, tasks.size());
             case TODO:
-                return ui.formatAdded(tasks.add(Parser.parseTodo(input)), tasks.size());
+                return addTask(Parser.parseTodo(input));
             case DEADLINE:
-                return ui.formatAdded(tasks.add(Parser.parseDeadline(input)), tasks.size());
+                return addTask(Parser.parseDeadline(input));
             case EVENT:
-                return ui.formatAdded(tasks.add(Parser.parseEvent(input)), tasks.size());
+                return addTask(Parser.parseEvent(input));
             case FIND:
                 return ui.formatFind(tasks.find(Parser.parseFind(input)));
             case HELP:
                 return ui.formatHelp();
             case PRIORITY:
                 PriorityCommand priorityCommand = Parser.parsePriority(input);
-                return ui.formatPriority(tasks.setPriority(
-                        priorityCommand.getIndex(), priorityCommand.getPriority()));
+                return changeTask(tasks.setPriority(
+                        priorityCommand.getIndex(), priorityCommand.getPriority()),
+                        ui::formatPriority);
             case UNKNOWN:
                 throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
             default:
@@ -129,5 +151,16 @@ public class Mouse {
             }
             return ui.formatError(exception.getMessage());
         }
+    }
+
+    private String addTask(Task task) throws MouseException {
+        Task added = tasks.add(task);
+        storage.save(tasks);
+        return ui.formatAdded(added, tasks.size());
+    }
+
+    private String changeTask(Task task, Function<Task, String> formatter) throws MouseException {
+        storage.save(tasks);
+        return formatter.apply(task);
     }
 }

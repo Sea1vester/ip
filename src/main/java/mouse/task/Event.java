@@ -30,4 +30,14 @@ public class Event extends Task {
         return "[" + TaskType.EVENT.getSymbol() + "]" + super.toString()
                 + " (from: " + from + " to: " + to + ")";
     }
+
+    /**
+     * Returns this event in save format.
+     *
+     * @return Encoded event line.
+     */
+    @Override
+    public String encode() {
+        return encodeFields(TaskType.EVENT.getSymbol(), from, to);
+    }
 }

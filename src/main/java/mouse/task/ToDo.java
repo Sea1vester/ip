@@ -22,4 +22,14 @@ public class ToDo extends Task {
     public String toString() {
         return "[" + TaskType.TODO.getSymbol() + "]" + super.toString();
     }
+
+    /**
+     * Returns this to-do in save format.
+     *
+     * @return Encoded to-do line.
+     */
+    @Override
+    public String encode() {
+        return encodeFields(TaskType.TODO.getSymbol());
+    }
 }

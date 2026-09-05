@@ -4,7 +4,7 @@ package mouse.task;
  * A task with a description and done status.
  * Base type for to-dos, deadlines, and events.
  */
-public class Task {
+public abstract class Task {
     protected String description;
     protected boolean isDone;
     private Priority priority;
@@ -53,6 +53,15 @@ public class Task {
     }
 
     /**
+     * Returns whether this task is marked done.
+     *
+     * @return {@code true} if done.
+     */
+    public boolean isDone() {
+        return isDone;
+    }
+
+    /**
      * Returns this task's priority.
      *
      * @return Current priority.
@@ -82,5 +91,34 @@ public class Task {
             return text;
         }
         return text + " (priority: " + priority.toDisplayString() + ")";
+    }
+
+    /**
+     * Returns a single-line save format for this task.
+     *
+     * @return Encoded task line.
+     */
+    public abstract String encode();
+
+    /**
+     * Returns the shared save prefix: type, done flag, priority, and description.
+     *
+     * @param typeSymbol Task type letter.
+     * @param extra Extra fields such as dates.
+     * @return Encoded fields joined by {@code |}.
+     */
+    protected String encodeFields(String typeSymbol, String... extra) {
+        StringBuilder line = new StringBuilder();
+        line.append(typeSymbol)
+                .append(" | ")
+                .append(isDone ? "1" : "0")
+                .append(" | ")
+                .append(priority.toDisplayString())
+                .append(" | ")
+                .append(description);
+        for (String field : extra) {
+            line.append(" | ").append(field);
+        }
+        return line.toString();
     }
 }

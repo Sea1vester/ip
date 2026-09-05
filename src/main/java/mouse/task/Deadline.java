@@ -86,4 +86,29 @@ public class Deadline extends Task {
         return "[" + TaskType.DEADLINE.getSymbol() + "]" + super.toString()
                 + " (by: " + output + ")";
     }
+
+    /**
+     * Returns the {@code /by} value in a form {@link Deadline} can parse again.
+     *
+     * @return ISO date, ISO date-time, or the original free text.
+     */
+    public String getByForSave() {
+        if (dateTime != null) {
+            return dateTime.format(DATE_TIME_IN);
+        }
+        if (date != null) {
+            return date.format(DATE_IN);
+        }
+        return byText;
+    }
+
+    /**
+     * Returns this deadline in save format.
+     *
+     * @return Encoded deadline line.
+     */
+    @Override
+    public String encode() {
+        return encodeFields(TaskType.DEADLINE.getSymbol(), getByForSave());
+    }
 }
