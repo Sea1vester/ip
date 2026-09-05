@@ -79,6 +79,21 @@ public class TaskListTest {
     }
 
     @Test
+    public void setPriority_validIndex_updatesTaskPriority() {
+        TaskList tasks = new TaskList();
+        tasks.add(new ToDo("read book"));
+        Task updated = tasks.setPriority(0, Priority.HIGH);
+        assertEquals(Priority.HIGH, updated.getPriority());
+        assertEquals("[T][ ] read book (priority: high)", updated.toString());
+    }
+
+    @Test
+    public void setPriority_invalidIndex_throwsIndexOutOfBoundsException() {
+        TaskList tasks = new TaskList();
+        assertThrows(IndexOutOfBoundsException.class, () -> tasks.setPriority(0, Priority.LOW));
+    }
+
+    @Test
     public void find_keywordInDescription_returnsMatchingTasksOnly() {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("read book"));

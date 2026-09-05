@@ -96,6 +96,24 @@ public class TaskList {
     }
 
     /**
+     * Sets the priority of the task at the 0-based {@code index}.
+     *
+     * @param index Zero-based index.
+     * @param priority Priority to assign.
+     * @return The updated task.
+     * @throws IndexOutOfBoundsException If the index is out of range.
+     */
+    public Task setPriority(int index, Priority priority) {
+        if (index < 0 || index >= tasks.size()) {
+            throw new IndexOutOfBoundsException();
+        }
+        assert index >= 0 && index < tasks.size() : "Priority index should be in range after the bounds check";
+        Task task = tasks.get(index);
+        task.setPriority(priority);
+        return task;
+    }
+
+    /**
      * Returns tasks whose description contains {@code keyword} (case-insensitive).
      *
      * @param keyword Text to look for in descriptions.

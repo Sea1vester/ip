@@ -20,6 +20,8 @@ public class CommandTypeTest {
         assertEquals(CommandType.MARK, CommandType.fromInput("mark 1"));
         assertEquals(CommandType.UNMARK, CommandType.fromInput("unmark 2"));
         assertEquals(CommandType.DELETE, CommandType.fromInput("delete 3"));
+        assertEquals(CommandType.PRIORITY, CommandType.fromInput("priority 1 high"));
+        assertEquals(CommandType.PRIORITY, CommandType.fromInput("priority"));
     }
 
     @Test

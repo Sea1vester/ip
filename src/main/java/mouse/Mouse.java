@@ -2,6 +2,7 @@ package mouse;
 
 import mouse.parser.CommandType;
 import mouse.parser.Parser;
+import mouse.parser.PriorityCommand;
 import mouse.task.TaskList;
 import mouse.ui.Ui;
 
@@ -113,6 +114,10 @@ public class Mouse {
                 return ui.formatFind(tasks.find(Parser.parseFind(input)));
             case HELP:
                 return ui.formatHelp();
+            case PRIORITY:
+                PriorityCommand priorityCommand = Parser.parsePriority(input);
+                return ui.formatPriority(tasks.setPriority(
+                        priorityCommand.getIndex(), priorityCommand.getPriority()));
             case UNKNOWN:
                 throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
             default:

@@ -35,6 +35,17 @@ public class MouseTest {
     }
 
     @Test
+    public void getResponse_priority_updatesExistingTask() {
+        Mouse mouse = new Mouse();
+        mouse.getResponse("todo read book");
+        String reply = mouse.getResponse("priority 1 high");
+        assertTrue(reply.contains("OK, I've set the priority of this task:"));
+        assertTrue(reply.contains("priority: high"));
+        String list = mouse.getResponse("list");
+        assertTrue(list.contains("read book (priority: high)"));
+    }
+
+    @Test
     public void getResponse_help_returnsCommandGuide() {
         Mouse mouse = new Mouse();
         String reply = mouse.getResponse("help");

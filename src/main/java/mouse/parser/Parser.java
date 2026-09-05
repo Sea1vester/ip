@@ -3,6 +3,7 @@ package mouse.parser;
 import mouse.MouseException;
 import mouse.task.Deadline;
 import mouse.task.Event;
+import mouse.task.Priority;
 import mouse.task.ToDo;
 
 /**
@@ -101,6 +102,30 @@ public class Parser {
             throw new MouseException("The '/to' time cannot be empty GRR");
         }
         return new Event(description, from, to);
+    }
+
+    /**
+     * Parses {@code priority INDEX LEVEL} into an index and {@link Priority}.
+     *
+     * @param input Full command line starting with {@code priority}.
+     * @return Parsed index and priority.
+     * @throws MouseException If the index or level is missing or invalid.
+     */
+    public static PriorityCommand parsePriority(String input) throws MouseException {
+        if (input.trim().equals("priority")) {
+            throw new MouseException("A priority command needs a task number and high, low, or none GRR");
+        }
+        String rest = input.substring("priority ".length()).trim();
+        String[] parts = rest.split("\\s+", 2);
+        if (parts.length < 2 || parts[1].isEmpty()) {
+            throw new MouseException("A priority command needs a task number and high, low, or none GRR");
+        }
+        try {
+            int index = Integer.parseInt(parts[0]) - 1;
+            return new PriorityCommand(index, Priority.fromString(parts[1]));
+        } catch (NumberFormatException exception) {
+            throw new MouseException("That's not a valid task number GRR");
+        }
     }
 
     /**

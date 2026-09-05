@@ -14,6 +14,7 @@ public enum CommandType {
     EVENT,
     FIND,
     HELP,
+    PRIORITY,
     UNKNOWN;
 
     /**
@@ -53,6 +54,9 @@ public enum CommandType {
         }
         if (trimmed.equals("help")) {
             return HELP;
+        }
+        if (trimmed.equals("priority") || trimmed.startsWith("priority ")) {
+            return PRIORITY;
         }
         return UNKNOWN;
     }

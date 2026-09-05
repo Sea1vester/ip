@@ -141,6 +141,16 @@ public class Ui {
     }
 
     /**
+     * Returns confirmation that a task's priority was updated.
+     *
+     * @param task Updated task.
+     * @return Confirmation text.
+     */
+    public String formatPriority(Task task) {
+        return joinLines("OK, I've set the priority of this task:", "  " + task);
+    }
+
+    /**
      * Returns a short guide to the commands Mouse understands.
      *
      * @return Help text.
@@ -156,6 +166,7 @@ public class Ui {
                 "• unmark INDEX - Mark that task as not done",
                 "• delete INDEX - Remove that task",
                 "• find KEYWORD - Show tasks containing KEYWORD",
+                "• priority INDEX high|low|none - Set that task's priority",
                 "• help - Show this guide",
                 "• bye - Exit Mouse");
     }
