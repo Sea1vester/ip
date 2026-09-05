@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import mouse.MouseException;
 import mouse.task.Deadline;
 import mouse.task.Event;
+import mouse.task.Priority;
 import mouse.task.ToDo;
 
 /**
@@ -88,5 +89,23 @@ public class ParserTest {
     public void parseFind_emptyKeyword_throwsMouseException() {
         assertThrows(MouseException.class, () -> Parser.parseFind("find"));
         assertThrows(MouseException.class, () -> Parser.parseFind("find   "));
+    }
+
+    @Test
+    public void parsePriority_validHigh_returnsIndexAndPriority() throws MouseException {
+        PriorityCommand command = Parser.parsePriority("priority 2 high");
+        assertEquals(1, command.getIndex());
+        assertEquals(Priority.HIGH, command.getPriority());
+    }
+
+    @Test
+    public void parsePriority_missingLevel_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parsePriority("priority"));
+        assertThrows(MouseException.class, () -> Parser.parsePriority("priority 1"));
+    }
+
+    @Test
+    public void parsePriority_unknownLevel_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parsePriority("priority 1 urgent"));
     }
 }

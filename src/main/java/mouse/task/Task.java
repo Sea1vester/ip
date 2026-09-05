@@ -7,6 +7,7 @@ package mouse.task;
 public class Task {
     protected String description;
     protected boolean isDone;
+    private Priority priority;
 
     /**
      * Creates an incomplete task with the given description.
@@ -16,6 +17,7 @@ public class Task {
     public Task(String description) {
         this.description = description;
         this.isDone = false;
+        this.priority = Priority.NONE;
     }
 
     /**
@@ -51,12 +53,34 @@ public class Task {
     }
 
     /**
+     * Returns this task's priority.
+     *
+     * @return Current priority.
+     */
+    public Priority getPriority() {
+        return priority;
+    }
+
+    /**
+     * Sets this task's priority.
+     *
+     * @param priority Priority to assign.
+     */
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    /**
      * Returns the status icon and description, for example {@code [ ] borrow book}.
      *
      * @return Display string without the task-type letter.
      */
     @Override
     public String toString() {
-        return "[" + getStatusIcon() + "] " + description;
+        String text = "[" + getStatusIcon() + "] " + description;
+        if (priority == Priority.NONE) {
+            return text;
+        }
+        return text + " (priority: " + priority.toDisplayString() + ")";
     }
 }
