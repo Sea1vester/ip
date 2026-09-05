@@ -112,6 +112,7 @@ public class Parser {
      * @throws MouseException If the number is missing or not an integer.
      */
     public static int parseIndex(String input, String prefix) throws MouseException {
+        assert prefix != null && !prefix.isEmpty() : "Command prefix should be a non-empty string";
         try {
             return Integer.parseInt(input.substring(prefix.length()).trim()) - 1;
         } catch (NumberFormatException exception) {
