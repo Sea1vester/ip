@@ -101,12 +101,9 @@ public class TaskList {
     public TaskList find(String keyword) {
         TaskList matches = new TaskList();
         String needle = keyword.toLowerCase();
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            if (task.getDescription().toLowerCase().contains(needle)) {
-                matches.add(task);
-            }
-        }
+        tasks.stream()
+                .filter(task -> task.getDescription().toLowerCase().contains(needle))
+                .forEach(matches::add);
         return matches;
     }
 }
