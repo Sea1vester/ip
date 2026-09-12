@@ -96,6 +96,15 @@ public class TaskListTest {
     }
 
     @Test
+    public void add_duplicateTodo_throwsMouseException() throws MouseException {
+        TaskList tasks = new TaskList();
+        tasks.add(new ToDo("read book"));
+        assertThrows(MouseException.class, () -> tasks.add(new ToDo("read book")));
+        assertThrows(MouseException.class, () -> tasks.add(new ToDo("Read Book")));
+        assertEquals(1, tasks.size());
+    }
+
+    @Test
     public void find_keywordInDescription_returnsMatchingTasksOnly() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("read book"));

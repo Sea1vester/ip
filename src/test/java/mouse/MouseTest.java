@@ -76,4 +76,41 @@ public class MouseTest {
         assertTrue(reply.contains("bye"));
         assertFalse(mouse.isExit("help"));
     }
+
+    @Test
+    public void getResponse_duplicateTodo_returnsError() {
+        Mouse mouse = mouse();
+        mouse.getResponse("todo read book");
+        String reply = mouse.getResponse("todo read book");
+        assertTrue(mouse.isErrorResponse(reply));
+        assertTrue(reply.contains("already in the stash"));
+        assertFalse(mouse.getResponse("list").contains("2."));
+    }
+
+    @Test
+    public void getResponse_invalidDate_returnsError() {
+        Mouse mouse = mouse();
+        String reply = mouse.getResponse("deadline report /by 2019-02-30");
+        assertTrue(mouse.isErrorResponse(reply));
+        assertTrue(reply.contains("not a real one"));
+    }
+
+    @Test
+    public void getResponse_listWithExtraWords_returnsError() {
+        Mouse mouse = mouse();
+        String reply = mouse.getResponse("list now");
+        assertTrue(mouse.isErrorResponse(reply));
+        assertTrue(reply.contains("does not take extra crumbs"));
+        assertFalse(mouse.isExit("bye now"));
+    }
+
+    @Test
+    public void getGreeting_corruptSaveFile_includesWarning() throws Exception {
+        Path saveFile = tempDir.resolve("mouse.txt");
+        java.nio.file.Files.writeString(saveFile, "not a task line\n");
+        Mouse mouse = new Mouse(saveFile.toString());
+        String greeting = mouse.getGreeting();
+        assertTrue(greeting.contains("Squeak! I'm Mouse."));
+        assertTrue(greeting.contains("mouldy"));
+    }
 }

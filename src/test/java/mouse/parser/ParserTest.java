@@ -108,4 +108,47 @@ public class ParserTest {
     public void parsePriority_unknownLevel_throwsMouseException() {
         assertThrows(MouseException.class, () -> Parser.parsePriority("priority 1 urgent"));
     }
+
+    @Test
+    public void parseDeadline_duplicateBy_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseDeadline("deadline foo /by a /by b"));
+    }
+
+    @Test
+    public void parseDeadline_invalidIsoDate_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseDeadline("deadline report /by 2019-02-30"));
+    }
+
+    @Test
+    public void parseEvent_duplicateFrom_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseEvent(
+                "event meeting /from Mon /from Tue /to Wed"));
+    }
+
+    @Test
+    public void parseEvent_startAfterEnd_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseEvent(
+                "event camp /from 2019-12-03 /to 2019-12-02"));
+    }
+
+    @Test
+    public void parseIndex_zeroOrNegative_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseIndex("mark 0", "mark"));
+        assertThrows(MouseException.class, () -> Parser.parseIndex("delete -1", "delete"));
+    }
+
+    @Test
+    public void parseIndex_extraWords_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseIndex("delete 1 extra", "delete"));
+    }
+
+    @Test
+    public void parseIndex_missingNumber_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.parseIndex("mark", "mark"));
+    }
+
+    @Test
+    public void assertBareCommand_extraWords_throwsMouseException() {
+        assertThrows(MouseException.class, () -> Parser.assertBareCommand("list now", "list"));
+    }
 }
