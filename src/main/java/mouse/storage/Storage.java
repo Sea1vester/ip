@@ -23,6 +23,7 @@ public class Storage {
     private static final String FIELD_SEPARATOR = " \\| ";
 
     private final Path filePath;
+    private String loadWarning;
 
     /**
      * Creates storage for the given file path.
@@ -34,26 +35,50 @@ public class Storage {
     }
 
     /**
+     * Returns a warning from the last {@link #load()}, or {@code null} if none.
+     *
+     * @return Load warning for the UI, if any.
+     */
+    public String getLoadWarning() {
+        return loadWarning;
+    }
+
+    /**
      * Returns tasks from disk.
      * A missing file yields an empty list. Invalid lines are skipped.
      *
      * @return Loaded tasks.
      */
     public TaskList load() {
+        loadWarning = null;
         if (!Files.exists(filePath)) {
+            return new TaskList();
+        }
+        if (!Files.isReadable(filePath)) {
+            loadWarning = "Could not read the stash file. Starting empty.";
             return new TaskList();
         }
         try {
             List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
-            TaskList tasks = new TaskList();
+            List<Task> loaded = new ArrayList<>();
+            int skipped = 0;
             for (String line : lines) {
                 Task task = decode(line);
-                if (task != null) {
-                    tasks.add(task);
+                if (task == null) {
+                    if (!line.isBlank()) {
+                        skipped++;
+                    }
+                    continue;
                 }
+                loaded.add(task);
             }
-            return tasks;
+            if (skipped > 0) {
+                String lineWord = skipped == 1 ? "line" : "lines";
+                loadWarning = "Skipped " + skipped + " mouldy " + lineWord + " in the stash file.";
+            }
+            return new TaskList(loaded);
         } catch (IOException exception) {
+            loadWarning = "Could not read the stash file. Starting empty.";
             return new TaskList();
         }
     }
@@ -76,7 +101,7 @@ public class Storage {
             }
             Files.write(filePath, lines, StandardCharsets.UTF_8);
         } catch (IOException exception) {
-            throw new MouseException("Could not save tasks to " + filePath);
+            throw new MouseException("Could not save crumbs to " + filePath + " GRR");
         }
     }
 
@@ -105,12 +130,12 @@ public class Storage {
                 task.setPriority(Priority.NONE);
             }
             return task;
-        } catch (RuntimeException exception) {
+        } catch (MouseException | RuntimeException exception) {
             return null;
         }
     }
 
-    private static Task decodeTask(String type, String[] parts) {
+    private static Task decodeTask(String type, String[] parts) throws MouseException {
         switch (type) {
         case "T":
             return new ToDo(join(parts, 3, parts.length));

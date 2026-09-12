@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import mouse.MouseException;
+
 /**
  * Stores a dynamic list of tasks and updates their status.
  */
@@ -15,6 +17,16 @@ public class TaskList {
      */
     public TaskList() {
         this.tasks = new ArrayList<>();
+    }
+
+    /**
+     * Creates a task list that already holds {@code tasks}.
+     * Used when loading from disk so duplicate lines are kept as stored.
+     *
+     * @param tasks Tasks to copy.
+     */
+    public TaskList(List<Task> tasks) {
+        this.tasks = new ArrayList<>(tasks);
     }
 
     /**
@@ -50,8 +62,14 @@ public class TaskList {
      *
      * @param task Task to add.
      * @return The same task.
+     * @throws MouseException If an equivalent crumb is already in the list.
      */
-    public Task add(Task task) {
+    public Task add(Task task) throws MouseException {
+        for (Task existing : tasks) {
+            if (existing.isDuplicateOf(task)) {
+                throw new MouseException("That crumb is already in the stash GRR");
+            }
+        }
         tasks.add(task);
         return task;
     }
@@ -130,11 +148,10 @@ public class TaskList {
      * @return A new list of matching tasks, numbered independently when printed.
      */
     public TaskList find(String keyword) {
-        TaskList matches = new TaskList();
         String needle = keyword.toLowerCase();
-        tasks.stream()
+        List<Task> matches = tasks.stream()
                 .filter(task -> task.getDescription().toLowerCase().contains(needle))
-                .forEach(matches::add);
-        return matches;
+                .toList();
+        return new TaskList(matches);
     }
 }

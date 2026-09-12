@@ -18,15 +18,10 @@ public class Parser {
      * @throws MouseException If the description is missing or empty.
      */
     public static ToDo parseTodo(String input) throws MouseException {
-        if (input.trim().equals("todo")) {
-            throw new MouseException("That crumb has no name GRR");
-        }
-
-        String description = input.substring("todo ".length()).trim();
+        String description = restAfter(input, "todo");
         if (description.isEmpty()) {
             throw new MouseException("That crumb has no name GRR");
         }
-
         return new ToDo(description);
     }
 
@@ -38,10 +33,7 @@ public class Parser {
      * @throws MouseException If the keyword is missing or empty.
      */
     public static String parseFind(String input) throws MouseException {
-        if (input.trim().equals("find")) {
-            throw new MouseException("Mouse needs a sniff-word to search GRR");
-        }
-        String keyword = input.substring("find ".length()).trim();
+        String keyword = restAfter(input, "find");
         if (keyword.isEmpty()) {
             throw new MouseException("Mouse needs a sniff-word to search GRR");
         }
@@ -56,7 +48,11 @@ public class Parser {
      * @throws MouseException If {@code /by}, the description, or the time is missing.
      */
     public static Deadline parseDeadline(String input) throws MouseException {
-        String rest = input.substring("deadline ".length()).trim();
+        String rest = restAfter(input, "deadline");
+        if (rest.isEmpty()) {
+            throw new MouseException("A deadline crumb needs a name and a '/by' time GRR");
+        }
+        assertSingleFlag(rest, "/by");
         int byIndex = rest.indexOf("/by");
         if (byIndex == -1) {
             throw new MouseException("A deadline crumb needs a '/by' time GRR");
@@ -80,7 +76,12 @@ public class Parser {
      * @throws MouseException If delimiters, description, or times are invalid.
      */
     public static Event parseEvent(String input) throws MouseException {
-        String rest = input.substring("event ".length()).trim();
+        String rest = restAfter(input, "event");
+        if (rest.isEmpty()) {
+            throw new MouseException("An event crumb needs a name, '/from', and '/to' GRR");
+        }
+        assertSingleFlag(rest, "/from");
+        assertSingleFlag(rest, "/to");
         int fromIndex = rest.indexOf("/from");
         int toIndex = rest.indexOf("/to");
         if (fromIndex == -1 || toIndex == -1) {
@@ -112,36 +113,94 @@ public class Parser {
      * @throws MouseException If the index or level is missing or invalid.
      */
     public static PriorityCommand parsePriority(String input) throws MouseException {
-        if (input.trim().equals("priority")) {
+        String rest = restAfter(input, "priority");
+        if (rest.isEmpty()) {
             throw new MouseException("Priority needs a crumb number and high, low, or none GRR");
         }
-        String rest = input.substring("priority ".length()).trim();
         String[] parts = rest.split("\\s+", 2);
         if (parts.length < 2 || parts[1].isEmpty()) {
             throw new MouseException("Priority needs a crumb number and high, low, or none GRR");
         }
+        if (parts[1].trim().split("\\s+").length != 1) {
+            throw new MouseException("Priority only wants high, low, or none GRR");
+        }
         try {
-            int index = Integer.parseInt(parts[0]) - 1;
-            return new PriorityCommand(index, Priority.fromString(parts[1]));
+            int number = Integer.parseInt(parts[0]);
+            if (number < 1) {
+                throw new MouseException("Crumb numbers start at 1 GRR");
+            }
+            return new PriorityCommand(number - 1, Priority.fromString(parts[1]));
         } catch (NumberFormatException exception) {
             throw new MouseException("That's not a valid crumb number GRR");
         }
     }
 
     /**
-     * Parses the 1-based task number after {@code prefix} as a 0-based index.
+     * Parses the 1-based task number after {@code commandWord} as a 0-based index.
      *
      * @param input Full command line, for example {@code mark 2}.
-     * @param prefix Command prefix including the trailing space, for example {@code mark }.
+     * @param commandWord Command word without a trailing space, for example {@code mark}.
      * @return Zero-based task index.
-     * @throws MouseException If the number is missing or not an integer.
+     * @throws MouseException If the number is missing, extra, or not a positive integer.
      */
-    public static int parseIndex(String input, String prefix) throws MouseException {
-        assert prefix != null && !prefix.isEmpty() : "Command prefix should be a non-empty string";
+    public static int parseIndex(String input, String commandWord) throws MouseException {
+        assert commandWord != null && !commandWord.isEmpty() : "Command word should be a non-empty string";
+        String rest = restAfter(input, commandWord);
+        if (rest.isEmpty()) {
+            throw new MouseException("Mouse needs a crumb number after " + commandWord + " GRR");
+        }
+        String[] parts = rest.split("\\s+");
+        if (parts.length != 1) {
+            throw new MouseException("Extra crumbs after the number GRR");
+        }
         try {
-            return Integer.parseInt(input.substring(prefix.length()).trim()) - 1;
+            int number = Integer.parseInt(parts[0]);
+            if (number < 1) {
+                throw new MouseException("Crumb numbers start at 1 GRR");
+            }
+            return number - 1;
         } catch (NumberFormatException exception) {
             throw new MouseException("That's not a valid crumb number GRR");
+        }
+    }
+
+    /**
+     * Rejects leftover words on a command that takes no arguments.
+     *
+     * @param input Raw user input.
+     * @param commandWord Expected bare command.
+     * @throws MouseException If anything follows {@code commandWord}.
+     */
+    public static void assertBareCommand(String input, String commandWord) throws MouseException {
+        if (!input.trim().equalsIgnoreCase(commandWord)) {
+            throw new MouseException("`" + commandWord + "` does not take extra crumbs GRR");
+        }
+    }
+
+    private static String restAfter(String input, String commandWord) {
+        String trimmed = input.trim();
+        if (trimmed.length() == commandWord.length()) {
+            return "";
+        }
+        return trimmed.substring(commandWord.length()).trim();
+    }
+
+    private static void assertSingleFlag(String text, String flag) throws MouseException {
+        if (countOccurrences(text, flag) > 1) {
+            throw new MouseException("Use " + flag + " only once GRR");
+        }
+    }
+
+    private static int countOccurrences(String text, String token) {
+        int count = 0;
+        int from = 0;
+        while (true) {
+            int at = text.indexOf(token, from);
+            if (at < 0) {
+                return count;
+            }
+            count++;
+            from = at + token.length();
         }
     }
 }

@@ -235,10 +235,10 @@ bye
      Crumbs in the stash:
     ____________________________________________________________
     ____________________________________________________________
-     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
+     SQUEAK!!! Mouse needs a crumb number after mark GRR
     ____________________________________________________________
     ____________________________________________________________
-     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
+     SQUEAK!!! Mouse needs a crumb number after unmark GRR
     ____________________________________________________________
     ____________________________________________________________
      Squeak. Mouse is off to nibble. See you.
@@ -327,7 +327,7 @@ bye
      SQUEAK!!! That crumb is not in the stash GRR
     ____________________________________________________________
     ____________________________________________________________
-     SQUEAK!!! That crumb is not in the stash GRR
+     SQUEAK!!! Crumb numbers start at 1 GRR
     ____________________________________________________________
     ____________________________________________________________
      SQUEAK!!! That's not a valid crumb number GRR
@@ -489,7 +489,7 @@ bye
      SQUEAK!!! That crumb is not in the stash GRR
     ____________________________________________________________
     ____________________________________________________________
-     SQUEAK!!! That crumb is not in the stash GRR
+     SQUEAK!!! Crumb numbers start at 1 GRR
     ____________________________________________________________
     ____________________________________________________________
      SQUEAK!!! That's not a valid crumb number GRR
@@ -695,13 +695,13 @@ bye
      Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
+     SQUEAK!!! Mouse needs a crumb number after delete GRR
     ____________________________________________________________
     ____________________________________________________________
-     SQUEAK!!! That crumb is not in the stash GRR
+     SQUEAK!!! Crumb numbers start at 1 GRR
     ____________________________________________________________
     ____________________________________________________________
-     SQUEAK!!! That's not a valid crumb number GRR
+     SQUEAK!!! Extra crumbs after the number GRR
     ____________________________________________________________
     ____________________________________________________________
      SQUEAK!!! The '/by' time cannot be empty GRR
@@ -716,13 +716,10 @@ bye
      SQUEAK!!! The '/from' time must come before the '/to' time GRR
     ____________________________________________________________
     ____________________________________________________________
-     Stashed this crumb:
-       [D][ ] foo (by: a /by b)
-     The stash now holds 1 crumb.
+     SQUEAK!!! Use /by only once GRR
     ____________________________________________________________
     ____________________________________________________________
      Crumbs in the stash:
-     1.[D][ ] foo (by: a /by b)
     ____________________________________________________________
     ____________________________________________________________
      Squeak. Mouse is off to nibble. See you.

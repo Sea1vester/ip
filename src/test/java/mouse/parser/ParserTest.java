@@ -71,13 +71,13 @@ public class ParserTest {
 
     @Test
     public void parseIndex_validNumber_returnsZeroBasedIndex() throws MouseException {
-        assertEquals(0, Parser.parseIndex("mark 1", "mark "));
-        assertEquals(2, Parser.parseIndex("delete 3", "delete "));
+        assertEquals(0, Parser.parseIndex("mark 1", "mark"));
+        assertEquals(2, Parser.parseIndex("delete 3", "delete"));
     }
 
     @Test
     public void parseIndex_nonNumeric_throwsMouseException() {
-        assertThrows(MouseException.class, () -> Parser.parseIndex("mark abc", "mark "));
+        assertThrows(MouseException.class, () -> Parser.parseIndex("mark abc", "mark"));
     }
 
     @Test

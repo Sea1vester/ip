@@ -35,10 +35,16 @@ public class CommandTypeTest {
     }
 
     @Test
-    public void fromInput_unknownOrIncomplete_returnsUnknown() {
+    public void fromInput_unknownWord_returnsUnknown() {
         assertEquals(CommandType.UNKNOWN, CommandType.fromInput("blah"));
-        assertEquals(CommandType.UNKNOWN, CommandType.fromInput("mark"));
-        assertEquals(CommandType.UNKNOWN, CommandType.fromInput("deadline"));
+        assertEquals(CommandType.UNKNOWN, CommandType.fromInput(""));
+    }
+
+    @Test
+    public void fromInput_commandWordOnly_stillRecognisesCommand() {
+        assertEquals(CommandType.MARK, CommandType.fromInput("mark"));
+        assertEquals(CommandType.DEADLINE, CommandType.fromInput("deadline"));
+        assertEquals(CommandType.DELETE, CommandType.fromInput("delete"));
     }
 
     @Test

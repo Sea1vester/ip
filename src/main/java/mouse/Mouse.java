@@ -54,7 +54,12 @@ public class Mouse {
      * @return Greeting text for a chat bubble.
      */
     public String getGreeting() {
-        return ui.formatGreeting();
+        String greeting = ui.formatGreeting();
+        String warning = storage.getLoadWarning();
+        if (warning == null) {
+            return greeting;
+        }
+        return greeting + "\n" + warning;
     }
 
     /**
@@ -64,7 +69,7 @@ public class Mouse {
      * @return {@code true} if the session should end.
      */
     public boolean isExit(String input) {
-        return CommandType.fromInput(input.trim()) == CommandType.BYE;
+        return input.trim().equalsIgnoreCase("bye");
     }
 
     /**
@@ -92,6 +97,10 @@ public class Mouse {
      */
     public void run() {
         ui.showGreeting();
+        String warning = storage.getLoadWarning();
+        if (warning != null) {
+            ui.showReply(warning);
+        }
         boolean isExit = false;
         while (!isExit) {
             isExit = handleCommand(ui.readCommand());
@@ -122,17 +131,19 @@ public class Mouse {
         try {
             switch (CommandType.fromInput(input)) {
             case BYE:
+                Parser.assertBareCommand(input, "bye");
                 return ui.formatBye();
             case LIST:
+                Parser.assertBareCommand(input, "list");
                 return ui.formatList(tasks);
             case MARK:
-                return changeTask(tasks.mark(Parser.parseIndex(input, "mark ")),
+                return changeTask(tasks.mark(Parser.parseIndex(input, "mark")),
                         ui::formatMarked);
             case UNMARK:
-                return changeTask(tasks.unmark(Parser.parseIndex(input, "unmark ")),
+                return changeTask(tasks.unmark(Parser.parseIndex(input, "unmark")),
                         ui::formatUnmarked);
             case DELETE:
-                Task deleted = tasks.delete(Parser.parseIndex(input, "delete "));
+                Task deleted = tasks.delete(Parser.parseIndex(input, "delete"));
                 storage.save(tasks);
                 return ui.formatDeleted(deleted, tasks.size());
             case TODO:
@@ -144,6 +155,7 @@ public class Mouse {
             case FIND:
                 return ui.formatFind(tasks.find(Parser.parseFind(input)));
             case HELP:
+                Parser.assertBareCommand(input, "help");
                 return ui.formatHelp();
             case PRIORITY:
                 PriorityCommand priorityCommand = Parser.parsePriority(input);

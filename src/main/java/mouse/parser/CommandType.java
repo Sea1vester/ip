@@ -25,39 +25,35 @@ public enum CommandType {
      */
     public static CommandType fromInput(String input) {
         String trimmed = input.trim();
-        if (trimmed.equals("bye")) {
+        if (trimmed.isEmpty()) {
+            return UNKNOWN;
+        }
+        String command = trimmed.split("\\s+", 2)[0].toLowerCase();
+        switch (command) {
+        case "bye":
             return BYE;
-        }
-        if (trimmed.equals("list")) {
+        case "list":
             return LIST;
-        }
-        if (trimmed.startsWith("mark ")) {
+        case "mark":
             return MARK;
-        }
-        if (trimmed.startsWith("unmark ")) {
+        case "unmark":
             return UNMARK;
-        }
-        if (trimmed.startsWith("delete ")) {
+        case "delete":
             return DELETE;
-        }
-        if (trimmed.equals("todo") || trimmed.startsWith("todo ")) {
+        case "todo":
             return TODO;
-        }
-        if (trimmed.startsWith("deadline ")) {
+        case "deadline":
             return DEADLINE;
-        }
-        if (trimmed.startsWith("event ")) {
+        case "event":
             return EVENT;
-        }
-        if (trimmed.equals("find") || trimmed.startsWith("find ")) {
+        case "find":
             return FIND;
-        }
-        if (trimmed.equals("help")) {
+        case "help":
             return HELP;
-        }
-        if (trimmed.equals("priority") || trimmed.startsWith("priority ")) {
+        case "priority":
             return PRIORITY;
+        default:
+            return UNKNOWN;
         }
-        return UNKNOWN;
     }
 }

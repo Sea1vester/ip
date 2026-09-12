@@ -5,19 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import mouse.MouseException;
+
 /**
  * Tests for {@link TaskList} list mutations.
  */
 public class TaskListTest {
     @Test
-    public void add_oneTask_sizeIsOne() {
+    public void add_oneTask_sizeIsOne() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("read book"));
         assertEquals(1, tasks.size());
     }
 
     @Test
-    public void mark_validIndex_marksTaskDone() {
+    public void mark_validIndex_marksTaskDone() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("read book"));
         Task marked = tasks.mark(0);
@@ -26,7 +28,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void mark_invalidIndex_throwsIndexOutOfBoundsException() {
+    public void mark_invalidIndex_throwsIndexOutOfBoundsException() throws MouseException {
         TaskList tasks = new TaskList();
         assertThrows(IndexOutOfBoundsException.class, () -> tasks.mark(0));
         tasks.add(new ToDo("read book"));
@@ -35,7 +37,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void unmark_validIndex_marksTaskNotDone() {
+    public void unmark_validIndex_marksTaskNotDone() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("read book"));
         tasks.mark(0);
@@ -50,7 +52,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void delete_validIndex_removesTaskAndShrinksList() {
+    public void delete_validIndex_removesTaskAndShrinksList() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("a"));
         tasks.add(new ToDo("b"));
@@ -67,7 +69,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void delete_middleTask_reindexesRemainingTasks() {
+    public void delete_middleTask_reindexesRemainingTasks() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("a"));
         tasks.add(new ToDo("b"));
@@ -79,7 +81,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void setPriority_validIndex_updatesTaskPriority() {
+    public void setPriority_validIndex_updatesTaskPriority() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("read book"));
         Task updated = tasks.setPriority(0, Priority.HIGH);
@@ -94,7 +96,7 @@ public class TaskListTest {
     }
 
     @Test
-    public void find_keywordInDescription_returnsMatchingTasksOnly() {
+    public void find_keywordInDescription_returnsMatchingTasksOnly() throws MouseException {
         TaskList tasks = new TaskList();
         tasks.add(new ToDo("read book"));
         tasks.add(new ToDo("buy bread"));

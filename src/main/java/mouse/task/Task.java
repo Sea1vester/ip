@@ -80,6 +80,18 @@ public abstract class Task {
     }
 
     /**
+     * Returns whether {@code other} is the same crumb, ignoring done state and priority.
+     *
+     * @param other Task to compare.
+     * @return {@code true} if both are the same kind of task with the same name.
+     */
+    public boolean isDuplicateOf(Task other) {
+        return other != null
+                && getClass() == other.getClass()
+                && description.equalsIgnoreCase(other.description);
+    }
+
+    /**
      * Returns the status icon and description, for example {@code [ ] borrow book}.
      *
      * @return Display string without the task-type letter.

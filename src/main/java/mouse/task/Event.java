@@ -1,11 +1,13 @@
 package mouse.task;
 
+import mouse.MouseException;
+
 /**
  * A task that starts and ends at given dates or times.
  */
 public class Event extends Task {
-    protected String from;
-    protected String to;
+    private final ParsedWhen from;
+    private final ParsedWhen to;
 
     /**
      * Creates an event with a start and end time.
@@ -13,11 +15,15 @@ public class Event extends Task {
      * @param description Task description.
      * @param from Start date or time text.
      * @param to End date or time text.
+     * @throws MouseException If a dated value is invalid, or start is not before end.
      */
-    public Event(String description, String from, String to) {
+    public Event(String description, String from, String to) throws MouseException {
         super(description);
-        this.from = from;
-        this.to = to;
+        this.from = ParsedWhen.parse(from, "The '/from' time");
+        this.to = ParsedWhen.parse(to, "The '/to' time");
+        if (this.from.canCompareTo(this.to) && this.from.compareTo(this.to) >= 0) {
+            throw new MouseException("The '/from' time must be earlier than the '/to' time GRR");
+        }
     }
 
     /**
@@ -28,7 +34,7 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[" + TaskType.EVENT.getSymbol() + "]" + super.toString()
-                + " (from: " + from + " to: " + to + ")";
+                + " (from: " + from.toDisplayString() + " to: " + to.toDisplayString() + ")";
     }
 
     /**
@@ -38,6 +44,22 @@ public class Event extends Task {
      */
     @Override
     public String encode() {
-        return encodeFields(TaskType.EVENT.getSymbol(), from, to);
+        return encodeFields(TaskType.EVENT.getSymbol(), from.toSaveString(), to.toSaveString());
+    }
+
+    /**
+     * Returns whether {@code other} is the same event crumb.
+     *
+     * @param other Task to compare.
+     * @return {@code true} if type, name, and range match.
+     */
+    @Override
+    public boolean isDuplicateOf(Task other) {
+        if (!super.isDuplicateOf(other)) {
+            return false;
+        }
+        Event event = (Event) other;
+        return from.toSaveString().equalsIgnoreCase(event.from.toSaveString())
+                && to.toSaveString().equalsIgnoreCase(event.to.toSaveString());
     }
 }
