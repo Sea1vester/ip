@@ -36,6 +36,7 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        dialogContainer.prefWidthProperty().bind(scrollPane.widthProperty().subtract(4));
     }
 
     /**
@@ -61,7 +62,7 @@ public class MainWindow extends AnchorPane {
         String response = mouse.getResponse(input);
         dialogContainer.getChildren().addAll(
                 DialogBox.getUserDialog(input, userImage),
-                DialogBox.getMouseDialog(response, mouseImage));
+                DialogBox.getMouseDialog(response, mouseImage, mouse.isErrorResponse(response)));
         userInput.clear();
         if (mouse.isExit(input)) {
             userInput.setDisable(true);

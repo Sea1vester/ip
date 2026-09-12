@@ -13,11 +13,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.shape.Circle;
 
 /**
- * A dialog row with a face image and a text bubble.
+ * A dialog row with optional face image and a text bubble.
  */
 public class DialogBox extends HBox {
+    private static final double AVATAR_SIZE = 36;
+
     @FXML
     private Label dialog;
     @FXML
@@ -45,18 +48,39 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
-        dialog.getStyleClass().add("reply-label");
     }
 
     /**
-     * Returns a dialog box for the user's message.
+     * Crops the avatar to a circle so it uses less space than a square photo.
+     */
+    private void clipAvatar() {
+        double radius = AVATAR_SIZE / 2;
+        displayPicture.setFitWidth(AVATAR_SIZE);
+        displayPicture.setFitHeight(AVATAR_SIZE);
+        displayPicture.setClip(new Circle(radius, radius, radius));
+    }
+
+    /**
+     * Hides the avatar. User crumbs do not need a large profile photo.
+     */
+    private void hideAvatar() {
+        displayPicture.setVisible(false);
+        displayPicture.setManaged(false);
+    }
+
+    /**
+     * Returns a compact right-aligned bubble for the user's message.
      *
      * @param text User text.
-     * @param img User display picture.
+     * @param img Unused user picture; kept so callers stay simple.
      * @return User dialog row.
      */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        DialogBox dialogBox = new DialogBox(text, img);
+        dialogBox.hideAvatar();
+        dialogBox.dialog.getStyleClass().add("user-label");
+        dialogBox.setAlignment(Pos.TOP_RIGHT);
+        return dialogBox;
     }
 
     /**
@@ -67,8 +91,22 @@ public class DialogBox extends HBox {
      * @return Mouse dialog row.
      */
     public static DialogBox getMouseDialog(String text, Image img) {
+        return getMouseDialog(text, img, false);
+    }
+
+    /**
+     * Returns a Mouse reply, using an error style when {@code isError} is set.
+     *
+     * @param text Reply text.
+     * @param img Mouse display picture.
+     * @param isError Whether to highlight the bubble as an error.
+     * @return Mouse dialog row.
+     */
+    public static DialogBox getMouseDialog(String text, Image img, boolean isError) {
         DialogBox dialogBox = new DialogBox(text, img);
         dialogBox.flip();
+        dialogBox.clipAvatar();
+        dialogBox.dialog.getStyleClass().add(isError ? "error-label" : "reply-label");
         return dialogBox;
     }
 }

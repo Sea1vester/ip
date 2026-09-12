@@ -68,6 +68,16 @@ public class Mouse {
     }
 
     /**
+     * Returns whether {@code reply} is an error message for the GUI.
+     *
+     * @param reply Reply text from {@link #getResponse(String)}.
+     * @return {@code true} if the reply should use the error bubble.
+     */
+    public boolean isErrorResponse(String reply) {
+        return ui.isErrorMessage(reply);
+    }
+
+    /**
      * Returns Mouse's reply for one command, for the GUI.
      *
      * @param input Raw user input.

@@ -28,8 +28,9 @@ public class Main extends Application {
             Scene scene = new Scene(anchorPane);
             stage.setScene(scene);
             stage.setTitle("Mouse");
-            stage.setMinHeight(220);
-            stage.setMinWidth(417);
+            stage.setResizable(true);
+            stage.setMinHeight(280);
+            stage.setMinWidth(360);
             fxmlLoader.<MainWindow>getController().setMouse(mouse);
             stage.show();
         } catch (IOException exception) {
