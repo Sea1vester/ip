@@ -23,9 +23,9 @@ public class MouseTest {
     public void getResponse_todo_returnsAddedConfirmation() {
         Mouse mouse = mouse();
         String reply = mouse.getResponse("todo read book");
-        assertTrue(reply.contains("Got it. I've added this task:"));
+        assertTrue(reply.contains("Stashed this crumb:"));
         assertTrue(reply.contains("read book"));
-        assertTrue(reply.contains("1 tasks"));
+        assertTrue(reply.contains("1 crumb"));
         assertFalse(mouse.isExit("todo read book"));
     }
 
@@ -33,15 +33,15 @@ public class MouseTest {
     public void getResponse_unknownCommand_returnsError() {
         Mouse mouse = mouse();
         String reply = mouse.getResponse("cheese");
-        assertTrue(reply.startsWith("OOPS!!!"));
-        assertTrue(reply.contains("MOUSE NO UNDERSTAND"));
+        assertTrue(reply.startsWith("SQUEAK!!!"));
+        assertTrue(reply.contains("Mouse no understand"));
     }
 
     @Test
     public void isExit_bye_returnsTrue() {
         Mouse mouse = mouse();
         assertTrue(mouse.isExit("bye"));
-        assertTrue(mouse.getResponse("bye").contains("Bye."));
+        assertTrue(mouse.getResponse("bye").contains("off to nibble"));
     }
 
     @Test
@@ -49,7 +49,7 @@ public class MouseTest {
         Mouse mouse = mouse();
         mouse.getResponse("todo read book");
         String reply = mouse.getResponse("priority 1 high");
-        assertTrue(reply.contains("OK, I've set the priority of this task:"));
+        assertTrue(reply.contains("OK, Mouse tagged this crumb:"));
         assertTrue(reply.contains("priority: high"));
         String list = mouse.getResponse("list");
         assertTrue(list.contains("read book (priority: high)"));

@@ -40,11 +40,11 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -68,16 +68,16 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -104,32 +104,32 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] borrow book
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [D][ ] submit report (by: Friday)
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [E][ ] project meeting (from: Mon 2pm to: 4pm)
-     Now you have 3 tasks in the list.
+     The stash now holds 3 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][ ] borrow book
      2.[D][ ] submit report (by: Friday)
      3.[E][ ] project meeting (from: Mon 2pm to: 4pm)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -158,39 +158,39 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] return book
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][ ] read book
      2.[T][ ] return book
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Nibble done. Marked this crumb:
        [T][X] return book
     ____________________________________________________________
     ____________________________________________________________
-     OK, I've marked this task as not done yet:
+     Un-nibbled. This crumb is open again:
        [T][ ] return book
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][ ] read book
      2.[T][ ] return book
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -219,29 +219,29 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
+     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! The description of a todo cannot be empty GRR
+     SQUEAK!!! That crumb has no name GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! The description of a todo cannot be empty GRR
+     SQUEAK!!! That crumb has no name GRR
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
+     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
+     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -269,26 +269,26 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! A deadline needs a '/by' time GRR
+     SQUEAK!!! A deadline crumb needs a '/by' time GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! An event needs both '/from' and '/to' times GRR
+     SQUEAK!!! An event crumb needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! An event needs both '/from' and '/to' times GRR
+     SQUEAK!!! An event crumb needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! An event needs both '/from' and '/to' times GRR
+     SQUEAK!!! An event crumb needs both '/from' and '/to' times GRR
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -315,25 +315,25 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That task does not exist GRR
+     SQUEAK!!! That crumb is not in the stash GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That task does not exist GRR
+     SQUEAK!!! That crumb is not in the stash GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That's not a valid task number GRR
+     SQUEAK!!! That's not a valid crumb number GRR
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -361,32 +361,32 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] borrow book
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
+     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [D][ ] return book (by: Sunday)
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! The description of a todo cannot be empty GRR
+     SQUEAK!!! That crumb has no name GRR
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][ ] borrow book
      2.[D][ ] return book (by: Sunday)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -415,42 +415,42 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] return book
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] buy bread
-     Now you have 3 tasks in the list.
+     The stash now holds 3 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][ ] read book
      2.[T][ ] return book
      3.[T][ ] buy bread
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Tossed this crumb:
        [T][ ] return book
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][ ] read book
      2.[T][ ] buy bread
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -477,25 +477,25 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] read book
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That task does not exist GRR
+     SQUEAK!!! That crumb is not in the stash GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That task does not exist GRR
+     SQUEAK!!! That crumb is not in the stash GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That's not a valid task number GRR
+     SQUEAK!!! That's not a valid crumb number GRR
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -523,34 +523,34 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] first
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] second
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Nibble done. Marked this crumb:
        [T][X] second
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Tossed this crumb:
        [T][ ] first
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][X] second
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -579,40 +579,40 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] a
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] b
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] c
-     Now you have 3 tasks in the list.
+     The stash now holds 3 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Tossed this crumb:
        [T][ ] a
-     Now you have 2 tasks in the list.
+     The stash now holds 2 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Nice! I've marked this task as done:
+     Nibble done. Marked this crumb:
        [T][X] c
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[T][ ] b
      2.[T][X] c
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -639,27 +639,27 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [T][ ] only
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Noted. I've removed this task:
+     Tossed this crumb:
        [T][ ] only
-     Now you have 0 tasks in the list.
+     The stash now holds 0 crumbs.
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```
 
@@ -691,40 +691,40 @@ bye
      | |\/| |/ _ \| | | / __|/ _ \
      | |  | | (_) | |_| \__ \  __/
      |_|  |_|\___/ \__,_|___/\___|
-     Hello! I'm Mouse.
-     What can I do for you?
+     Squeak! I'm Mouse.
+     Got any crumbs to stash?
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE
+     SQUEAK!!! Mouse no understand. Give cheese (or a real command).
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That task does not exist GRR
+     SQUEAK!!! That crumb is not in the stash GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! That's not a valid task number GRR
+     SQUEAK!!! That's not a valid crumb number GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! The '/by' time cannot be empty GRR
+     SQUEAK!!! The '/by' time cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! The description of a deadline cannot be empty GRR
+     SQUEAK!!! That deadline crumb has no name GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! The '/to' time cannot be empty GRR
+     SQUEAK!!! The '/to' time cannot be empty GRR
     ____________________________________________________________
     ____________________________________________________________
-     OOPS!!! The '/from' time must come before the '/to' time GRR
+     SQUEAK!!! The '/from' time must come before the '/to' time GRR
     ____________________________________________________________
     ____________________________________________________________
-     Got it. I've added this task:
+     Stashed this crumb:
        [D][ ] foo (by: a /by b)
-     Now you have 1 tasks in the list.
+     The stash now holds 1 crumb.
     ____________________________________________________________
     ____________________________________________________________
-     Here are the tasks in your list:
+     Crumbs in the stash:
      1.[D][ ] foo (by: a /by b)
     ____________________________________________________________
     ____________________________________________________________
-     Bye. Hope to see you again soon!
+     Squeak. Mouse is off to nibble. See you.
     ____________________________________________________________
 ```

@@ -27,7 +27,7 @@ public enum Priority {
         case "none":
             return NONE;
         default:
-            throw new MouseException("Priority must be high, low, or none GRR");
+            throw new MouseException("Priority must be high, low, or none. Mouse is picky GRR");
         }
     }
 

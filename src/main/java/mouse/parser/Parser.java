@@ -19,12 +19,12 @@ public class Parser {
      */
     public static ToDo parseTodo(String input) throws MouseException {
         if (input.trim().equals("todo")) {
-            throw new MouseException("The description of a todo cannot be empty GRR");
+            throw new MouseException("That crumb has no name GRR");
         }
 
         String description = input.substring("todo ".length()).trim();
         if (description.isEmpty()) {
-            throw new MouseException("The description of a todo cannot be empty GRR");
+            throw new MouseException("That crumb has no name GRR");
         }
 
         return new ToDo(description);
@@ -39,11 +39,11 @@ public class Parser {
      */
     public static String parseFind(String input) throws MouseException {
         if (input.trim().equals("find")) {
-            throw new MouseException("The find keyword cannot be empty GRR");
+            throw new MouseException("Mouse needs a sniff-word to search GRR");
         }
         String keyword = input.substring("find ".length()).trim();
         if (keyword.isEmpty()) {
-            throw new MouseException("The find keyword cannot be empty GRR");
+            throw new MouseException("Mouse needs a sniff-word to search GRR");
         }
         return keyword;
     }
@@ -59,11 +59,11 @@ public class Parser {
         String rest = input.substring("deadline ".length()).trim();
         int byIndex = rest.indexOf("/by");
         if (byIndex == -1) {
-            throw new MouseException("A deadline needs a '/by' time GRR");
+            throw new MouseException("A deadline crumb needs a '/by' time GRR");
         }
         String description = rest.substring(0, byIndex).trim();
         if (description.isEmpty()) {
-            throw new MouseException("The description of a deadline cannot be empty GRR");
+            throw new MouseException("That deadline crumb has no name GRR");
         }
         String by = rest.substring(byIndex + "/by".length()).trim();
         if (by.isEmpty()) {
@@ -84,14 +84,14 @@ public class Parser {
         int fromIndex = rest.indexOf("/from");
         int toIndex = rest.indexOf("/to");
         if (fromIndex == -1 || toIndex == -1) {
-            throw new MouseException("An event needs both '/from' and '/to' times GRR");
+            throw new MouseException("An event crumb needs both '/from' and '/to' times GRR");
         }
         if (fromIndex > toIndex) {
             throw new MouseException("The '/from' time must come before the '/to' time GRR");
         }
         String description = rest.substring(0, fromIndex).trim();
         if (description.isEmpty()) {
-            throw new MouseException("The description of an event cannot be empty GRR");
+            throw new MouseException("That event crumb has no name GRR");
         }
         String from = rest.substring(fromIndex + "/from".length(), toIndex).trim();
         if (from.isEmpty()) {
@@ -113,18 +113,18 @@ public class Parser {
      */
     public static PriorityCommand parsePriority(String input) throws MouseException {
         if (input.trim().equals("priority")) {
-            throw new MouseException("A priority command needs a task number and high, low, or none GRR");
+            throw new MouseException("Priority needs a crumb number and high, low, or none GRR");
         }
         String rest = input.substring("priority ".length()).trim();
         String[] parts = rest.split("\\s+", 2);
         if (parts.length < 2 || parts[1].isEmpty()) {
-            throw new MouseException("A priority command needs a task number and high, low, or none GRR");
+            throw new MouseException("Priority needs a crumb number and high, low, or none GRR");
         }
         try {
             int index = Integer.parseInt(parts[0]) - 1;
             return new PriorityCommand(index, Priority.fromString(parts[1]));
         } catch (NumberFormatException exception) {
-            throw new MouseException("That's not a valid task number GRR");
+            throw new MouseException("That's not a valid crumb number GRR");
         }
     }
 
@@ -141,7 +141,7 @@ public class Parser {
         try {
             return Integer.parseInt(input.substring(prefix.length()).trim()) - 1;
         } catch (NumberFormatException exception) {
-            throw new MouseException("That's not a valid task number GRR");
+            throw new MouseException("That's not a valid crumb number GRR");
         }
     }
 }

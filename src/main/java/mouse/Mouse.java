@@ -141,13 +141,13 @@ public class Mouse {
                         priorityCommand.getIndex(), priorityCommand.getPriority()),
                         ui::formatPriority);
             case UNKNOWN:
-                throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
+                throw new MouseException("Mouse no understand. Give cheese (or a real command).");
             default:
-                throw new MouseException("MOUSE NO UNDERSTAND. GIVE CHEESE TO MOUSE");
+                throw new MouseException("Mouse no understand. Give cheese (or a real command).");
             }
         } catch (MouseException | IndexOutOfBoundsException exception) {
             if (exception instanceof IndexOutOfBoundsException) {
-                return ui.formatError("That task does not exist GRR");
+                return ui.formatError("That crumb is not in the stash GRR");
             }
             return ui.formatError(exception.getMessage());
         }

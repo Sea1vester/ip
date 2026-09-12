@@ -16,6 +16,7 @@ public class Ui {
             + "| |\\/| |/ _ \\| | | / __|/ _ \\\n"
             + "| |  | | (_) | |_| \\__ \\  __/\n"
             + "|_|  |_|\\___/ \\__,_|___/\\___|";
+    private static final String ERROR_PREFIX = "SQUEAK!!! ";
 
     private final Scanner scanner;
 
@@ -31,8 +32,8 @@ public class Ui {
      */
     public void showGreeting() {
         showReply(append(BANNER.split("\n"),
-                "Hello! I'm Mouse.",
-                "What can I do for you?"));
+                "Squeak! I'm Mouse.",
+                "Got any crumbs to stash?"));
     }
 
     /**
@@ -50,7 +51,7 @@ public class Ui {
      * @return Greeting text for a chat bubble.
      */
     public String formatGreeting() {
-        return joinLines("Hello! I'm Mouse.", "What can I do for you?");
+        return joinLines("Squeak! I'm Mouse.", "Got any crumbs to stash?");
     }
 
     /**
@@ -59,7 +60,7 @@ public class Ui {
      * @return Goodbye text.
      */
     public String formatBye() {
-        return "Bye. Hope to see you again soon!";
+        return "Squeak. Mouse is off to nibble. See you.";
     }
 
     /**
@@ -71,9 +72,9 @@ public class Ui {
      */
     public String formatAdded(Task task, int taskCount) {
         return joinLines(
-                "Got it. I've added this task:",
+                "Stashed this crumb:",
                 "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
+                formatStashCount(taskCount));
     }
 
     /**
@@ -83,7 +84,7 @@ public class Ui {
      * @return Confirmation text.
      */
     public String formatMarked(Task task) {
-        return joinLines("Nice! I've marked this task as done:", "  " + task);
+        return joinLines("Nibble done. Marked this crumb:", "  " + task);
     }
 
     /**
@@ -93,7 +94,7 @@ public class Ui {
      * @return Confirmation text.
      */
     public String formatUnmarked(Task task) {
-        return joinLines("OK, I've marked this task as not done yet:", "  " + task);
+        return joinLines("Un-nibbled. This crumb is open again:", "  " + task);
     }
 
     /**
@@ -105,19 +106,29 @@ public class Ui {
      */
     public String formatDeleted(Task task, int taskCount) {
         return joinLines(
-                "Noted. I've removed this task:",
+                "Tossed this crumb:",
                 "  " + task,
-                "Now you have " + taskCount + " tasks in the list.");
+                formatStashCount(taskCount));
     }
 
     /**
-     * Returns an error message with the {@code OOPS!!!} prefix.
+     * Returns an error message with the {@code SQUEAK!!!} prefix.
      *
      * @param errorMessage Error text without the prefix.
      * @return Error text for display.
      */
     public String formatError(String errorMessage) {
-        return "OOPS!!! " + errorMessage;
+        return ERROR_PREFIX + errorMessage;
+    }
+
+    /**
+     * Returns whether {@code text} is an error reply.
+     *
+     * @param text Reply text.
+     * @return {@code true} if the reply is an error.
+     */
+    public boolean isErrorMessage(String text) {
+        return text != null && text.startsWith(ERROR_PREFIX);
     }
 
     /**
@@ -127,7 +138,7 @@ public class Ui {
      * @return List text.
      */
     public String formatList(TaskList tasks) {
-        return formatNumberedTasks("Here are the tasks in your list:", tasks);
+        return formatNumberedTasks("Crumbs in the stash:", tasks);
     }
 
     /**
@@ -137,7 +148,7 @@ public class Ui {
      * @return Find result text.
      */
     public String formatFind(TaskList matches) {
-        return formatNumberedTasks("Here are the matching tasks in your list:", matches);
+        return formatNumberedTasks("Crumbs matching that sniff:", matches);
     }
 
     /**
@@ -147,7 +158,7 @@ public class Ui {
      * @return Confirmation text.
      */
     public String formatPriority(Task task) {
-        return joinLines("OK, I've set the priority of this task:", "  " + task);
+        return joinLines("OK, Mouse tagged this crumb:", "  " + task);
     }
 
     /**
@@ -157,7 +168,7 @@ public class Ui {
      */
     public String formatHelp() {
         return joinLines(
-                "Commands:",
+                "Mouse hoards crumbs. Commands it understands:",
                 "• todo DESCRIPTION - Add a to-do",
                 "• deadline DESCRIPTION /by WHEN - Add a deadline (e.g. 2019-12-02)",
                 "• event DESCRIPTION /from START /to END - Add an event",
@@ -222,16 +233,16 @@ public class Ui {
      * @param task Deleted task.
      */
     public void showDeleted(Task task) {
-        showReply("Noted, I've removed this task:", " " + task);
+        showReply("Tossed this crumb:", " " + task);
     }
 
     /**
      * Prints an error message wrapped like other replies.
      *
-     * @param errorMessage Error text without the {@code OOPS!!!} prefix.
+     * @param errorMessage Error text without the {@code SQUEAK!!!} prefix.
      */
     public void showError(String errorMessage) {
-        showReply("OOPS!!! " + errorMessage);
+        showReply(formatError(errorMessage));
     }
 
     /**
@@ -240,7 +251,7 @@ public class Ui {
      * @param tasks Task list to display.
      */
     public void showList(TaskList tasks) {
-        showReply(numberedLines("Here are the tasks in your list:", tasks));
+        showReply(numberedLines("Crumbs in the stash:", tasks));
     }
 
     /**
@@ -249,7 +260,7 @@ public class Ui {
      * @param matches Tasks that matched the keyword.
      */
     public void showFind(TaskList matches) {
-        showReply(numberedLines("Here are the matching tasks in your list:", matches));
+        showReply(numberedLines("Crumbs matching that sniff:", matches));
     }
 
     /**
@@ -270,6 +281,11 @@ public class Ui {
             System.out.println(INDENT + message);
         }
         System.out.println(LINE);
+    }
+
+    private String formatStashCount(int taskCount) {
+        String crumbWord = taskCount == 1 ? "crumb" : "crumbs";
+        return "The stash now holds " + taskCount + " " + crumbWord + ".";
     }
 
     private String formatNumberedTasks(String header, TaskList tasks) {
