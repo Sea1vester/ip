@@ -1,10 +1,14 @@
 # Mouse
 
-Mouse is a JavaFX chatbot for to-dos, deadlines, and events.
+Mouse is a JavaFX chatbot that hoards to-dos, deadlines, and events.
+
+![Mouse GUI](docs/Ui.png)
 
 ## User guide
 
-See [docs/README.md](docs/README.md).
+See the [Mouse User Guide](https://Sea1vester.github.io/ip/).
+
+The Markdown source is [docs/README.md](docs/README.md).
 
 ## Run
 
@@ -25,3 +29,9 @@ The CLI entry point is `mouse.Mouse`.
 The JAR and `./gradlew run` start the GUI via `mouse.Launcher`.
 
 Tasks are saved to `data/mouse.txt`.
+
+## Credits
+
+GUI scaffolding follows the [SE-EDU JavaFX tutorial](https://se-education.org/guides/tutorials/javaFx.html)
+(Jeffry Lum and Damith C. Rajapakse).
+See [CONTRIBUTORS.md](CONTRIBUTORS.md).
