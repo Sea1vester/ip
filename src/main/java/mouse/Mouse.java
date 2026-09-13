@@ -129,49 +129,57 @@ public class Mouse {
      */
     private String execute(String input) {
         try {
-            switch (CommandType.fromInput(input)) {
-            case BYE:
-                Parser.assertBareCommand(input, "bye");
-                return ui.formatBye();
-            case LIST:
-                Parser.assertBareCommand(input, "list");
-                return ui.formatList(tasks);
-            case MARK:
-                return changeTask(tasks.mark(Parser.parseIndex(input, "mark")),
-                        ui::formatMarked);
-            case UNMARK:
-                return changeTask(tasks.unmark(Parser.parseIndex(input, "unmark")),
-                        ui::formatUnmarked);
-            case DELETE:
-                Task deleted = tasks.delete(Parser.parseIndex(input, "delete"));
-                storage.save(tasks);
-                return ui.formatDeleted(deleted, tasks.size());
-            case TODO:
-                return addTask(Parser.parseTodo(input));
-            case DEADLINE:
-                return addTask(Parser.parseDeadline(input));
-            case EVENT:
-                return addTask(Parser.parseEvent(input));
-            case FIND:
-                return ui.formatFind(tasks.find(Parser.parseFind(input)));
-            case HELP:
-                Parser.assertBareCommand(input, "help");
-                return ui.formatHelp();
-            case PRIORITY:
-                PriorityCommand priorityCommand = Parser.parsePriority(input);
-                return changeTask(tasks.setPriority(
-                        priorityCommand.getIndex(), priorityCommand.getPriority()),
-                        ui::formatPriority);
-            case UNKNOWN:
-                throw new MouseException("Mouse no understand. Give cheese (or a real command).");
-            default:
-                throw new MouseException("Mouse no understand. Give cheese (or a real command).");
-            }
-        } catch (MouseException | IndexOutOfBoundsException exception) {
-            if (exception instanceof IndexOutOfBoundsException) {
-                return ui.formatError("That crumb is not in the stash GRR");
-            }
+            return executeCommand(input);
+        } catch (MouseException exception) {
             return ui.formatError(exception.getMessage());
+        } catch (IndexOutOfBoundsException exception) {
+            return ui.formatError("That crumb is not in the stash GRR");
+        }
+    }
+
+    /**
+     * Routes {@code input} to the matching command.
+     *
+     * @param input Trimmed user input.
+     * @return Reply text to show the user.
+     * @throws MouseException If the command is invalid.
+     */
+    private String executeCommand(String input) throws MouseException {
+        switch (CommandType.fromInput(input)) {
+        case BYE:
+            Parser.assertBareCommand(input, "bye");
+            return ui.formatBye();
+        case LIST:
+            Parser.assertBareCommand(input, "list");
+            return ui.formatList(tasks);
+        case MARK:
+            return changeTask(tasks.mark(Parser.parseIndex(input, "mark")), ui::formatMarked);
+        case UNMARK:
+            return changeTask(tasks.unmark(Parser.parseIndex(input, "unmark")), ui::formatUnmarked);
+        case DELETE:
+            Task deleted = tasks.delete(Parser.parseIndex(input, "delete"));
+            storage.save(tasks);
+            return ui.formatDeleted(deleted, tasks.size());
+        case TODO:
+            return addTask(Parser.parseTodo(input));
+        case DEADLINE:
+            return addTask(Parser.parseDeadline(input));
+        case EVENT:
+            return addTask(Parser.parseEvent(input));
+        case FIND:
+            return ui.formatFind(tasks.find(Parser.parseFind(input)));
+        case HELP:
+            Parser.assertBareCommand(input, "help");
+            return ui.formatHelp();
+        case PRIORITY:
+            PriorityCommand priorityCommand = Parser.parsePriority(input);
+            return changeTask(tasks.setPriority(
+                    priorityCommand.getIndex(), priorityCommand.getPriority()),
+                    ui::formatPriority);
+        case UNKNOWN:
+            throw new MouseException("Mouse no understand. Give cheese (or a real command).");
+        default:
+            throw new MouseException("Mouse no understand. Give cheese (or a real command).");
         }
     }
 

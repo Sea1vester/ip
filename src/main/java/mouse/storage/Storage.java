@@ -55,32 +55,58 @@ public class Storage {
             return new TaskList();
         }
         if (!Files.isReadable(filePath)) {
-            loadWarning = "Could not read the stash file. Starting empty.";
-            return new TaskList();
+            return emptyWithUnreadableWarning();
         }
         try {
-            List<String> lines = Files.readAllLines(filePath, StandardCharsets.UTF_8);
-            List<Task> loaded = new ArrayList<>();
-            int skipped = 0;
-            for (String line : lines) {
-                Task task = decode(line);
-                if (task == null) {
-                    if (!line.isBlank()) {
-                        skipped++;
-                    }
-                    continue;
-                }
-                loaded.add(task);
-            }
-            if (skipped > 0) {
-                String lineWord = skipped == 1 ? "line" : "lines";
-                loadWarning = "Skipped " + skipped + " mouldy " + lineWord + " in the stash file.";
-            }
-            return new TaskList(loaded);
+            return loadExistingFile();
         } catch (IOException exception) {
-            loadWarning = "Could not read the stash file. Starting empty.";
-            return new TaskList();
+            return emptyWithUnreadableWarning();
         }
+    }
+
+    /**
+     * Returns an empty list and records that the stash file could not be read.
+     *
+     * @return Empty task list.
+     */
+    private TaskList emptyWithUnreadableWarning() {
+        loadWarning = "Could not read the stash file. Starting empty.";
+        return new TaskList();
+    }
+
+    /**
+     * Reads an existing stash file, skipping invalid lines.
+     *
+     * @return Loaded tasks.
+     * @throws IOException If the file cannot be read.
+     */
+    private TaskList loadExistingFile() throws IOException {
+        List<Task> loaded = new ArrayList<>();
+        int skipped = 0;
+        for (String line : Files.readAllLines(filePath, StandardCharsets.UTF_8)) {
+            skipped += addDecodedLine(loaded, line);
+        }
+        if (skipped > 0) {
+            String lineWord = skipped == 1 ? "line" : "lines";
+            loadWarning = "Skipped " + skipped + " mouldy " + lineWord + " in the stash file.";
+        }
+        return new TaskList(loaded);
+    }
+
+    /**
+     * Decodes {@code line} into {@code loaded}, or counts it as skipped.
+     *
+     * @param loaded Tasks collected so far.
+     * @param line One save-file line.
+     * @return {@code 1} if a non-blank line was skipped, otherwise {@code 0}.
+     */
+    private static int addDecodedLine(List<Task> loaded, String line) {
+        Task task = decode(line);
+        if (task != null) {
+            loaded.add(task);
+            return 0;
+        }
+        return line.isBlank() ? 0 : 1;
     }
 
     /**
@@ -119,26 +145,34 @@ public class Storage {
         if (parts.length < 4) {
             return null;
         }
-        String type = parts[0];
-        String doneFlag = parts[1];
-        String priorityRaw = parts[2];
         try {
-            Task task = decodeTask(type, parts);
-            if (task == null) {
-                return null;
-            }
-            if ("1".equals(doneFlag)) {
-                task.markAsDone();
-            }
-            try {
-                task.setPriority(Priority.fromString(priorityRaw));
-            } catch (MouseException exception) {
-                task.setPriority(Priority.NONE);
-            }
-            return task;
+            return decorate(decodeTask(parts[0], parts), parts[1], parts[2]);
         } catch (MouseException | RuntimeException exception) {
             return null;
         }
+    }
+
+    /**
+     * Applies done status and priority to a decoded task.
+     *
+     * @param task Decoded task, or {@code null}.
+     * @param doneFlag {@code 1} if done.
+     * @param priorityRaw Saved priority word.
+     * @return {@code task} with flags applied, or {@code null}.
+     */
+    private static Task decorate(Task task, String doneFlag, String priorityRaw) {
+        if (task == null) {
+            return null;
+        }
+        if ("1".equals(doneFlag)) {
+            task.markAsDone();
+        }
+        try {
+            task.setPriority(Priority.fromString(priorityRaw));
+        } catch (MouseException exception) {
+            task.setPriority(Priority.NONE);
+        }
+        return task;
     }
 
     /**

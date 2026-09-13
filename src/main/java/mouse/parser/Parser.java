@@ -52,19 +52,10 @@ public class Parser {
         if (rest.isEmpty()) {
             throw new MouseException("A deadline crumb needs a name and a '/by' time GRR");
         }
-        assertSingleFlag(rest, "/by");
-        int byIndex = rest.indexOf("/by");
-        if (byIndex == -1) {
-            throw new MouseException("A deadline crumb needs a '/by' time GRR");
-        }
-        String description = rest.substring(0, byIndex).trim();
-        if (description.isEmpty()) {
-            throw new MouseException("That deadline crumb has no name GRR");
-        }
-        String by = rest.substring(byIndex + "/by".length()).trim();
-        if (by.isEmpty()) {
-            throw new MouseException("The '/by' time cannot be empty GRR");
-        }
+        int byIndex = indexOfSingleFlag(rest, "/by", "A deadline crumb needs a '/by' time GRR");
+        String description = requireSlice(rest, 0, byIndex, "That deadline crumb has no name GRR");
+        String by = requireSlice(rest, byIndex + "/by".length(), rest.length(),
+                "The '/by' time cannot be empty GRR");
         return new Deadline(description, by);
     }
 
@@ -80,28 +71,17 @@ public class Parser {
         if (rest.isEmpty()) {
             throw new MouseException("An event crumb needs a name, '/from', and '/to' GRR");
         }
-        assertSingleFlag(rest, "/from");
-        assertSingleFlag(rest, "/to");
-        int fromIndex = rest.indexOf("/from");
-        int toIndex = rest.indexOf("/to");
-        if (fromIndex == -1 || toIndex == -1) {
-            throw new MouseException("An event crumb needs both '/from' and '/to' times GRR");
-        }
+        String missingRange = "An event crumb needs both '/from' and '/to' times GRR";
+        int fromIndex = indexOfSingleFlag(rest, "/from", missingRange);
+        int toIndex = indexOfSingleFlag(rest, "/to", missingRange);
         if (fromIndex > toIndex) {
             throw new MouseException("The '/from' time must come before the '/to' time GRR");
         }
-        String description = rest.substring(0, fromIndex).trim();
-        if (description.isEmpty()) {
-            throw new MouseException("That event crumb has no name GRR");
-        }
-        String from = rest.substring(fromIndex + "/from".length(), toIndex).trim();
-        if (from.isEmpty()) {
-            throw new MouseException("The '/from' time cannot be empty GRR");
-        }
-        String to = rest.substring(toIndex + "/to".length()).trim();
-        if (to.isEmpty()) {
-            throw new MouseException("The '/to' time cannot be empty GRR");
-        }
+        String description = requireSlice(rest, 0, fromIndex, "That event crumb has no name GRR");
+        String from = requireSlice(rest, fromIndex + "/from".length(), toIndex,
+                "The '/from' time cannot be empty GRR");
+        String to = requireSlice(rest, toIndex + "/to".length(), rest.length(),
+                "The '/to' time cannot be empty GRR");
         return new Event(description, from, to);
     }
 
@@ -114,25 +94,15 @@ public class Parser {
      */
     public static PriorityCommand parsePriority(String input) throws MouseException {
         String rest = restAfter(input, "priority");
-        if (rest.isEmpty()) {
-            throw new MouseException("Priority needs a crumb number and high, low, or none GRR");
-        }
         String[] parts = rest.split("\\s+", 2);
-        if (parts.length < 2 || parts[1].isEmpty()) {
+        if (rest.isEmpty() || parts.length < 2 || parts[1].isEmpty()) {
             throw new MouseException("Priority needs a crumb number and high, low, or none GRR");
         }
         if (parts[1].trim().split("\\s+").length != 1) {
             throw new MouseException("Priority only wants high, low, or none GRR");
         }
-        try {
-            int number = Integer.parseInt(parts[0]);
-            if (number < 1) {
-                throw new MouseException("Crumb numbers start at 1 GRR");
-            }
-            return new PriorityCommand(number - 1, Priority.fromString(parts[1]));
-        } catch (NumberFormatException exception) {
-            throw new MouseException("That's not a valid crumb number GRR");
-        }
+        int index = parsePositiveIndex(parts[0]) - 1;
+        return new PriorityCommand(index, Priority.fromString(parts[1]));
     }
 
     /**
@@ -153,12 +123,23 @@ public class Parser {
         if (parts.length != 1) {
             throw new MouseException("Extra crumbs after the number GRR");
         }
+        return parsePositiveIndex(parts[0]) - 1;
+    }
+
+    /**
+     * Parses a 1-based crumb number.
+     *
+     * @param raw Number text.
+     * @return Positive integer.
+     * @throws MouseException If {@code raw} is not an integer of 1 or more.
+     */
+    private static int parsePositiveIndex(String raw) throws MouseException {
         try {
-            int number = Integer.parseInt(parts[0]);
+            int number = Integer.parseInt(raw);
             if (number < 1) {
                 throw new MouseException("Crumb numbers start at 1 GRR");
             }
-            return number - 1;
+            return number;
         } catch (NumberFormatException exception) {
             throw new MouseException("That's not a valid crumb number GRR");
         }
@@ -193,16 +174,43 @@ public class Parser {
     }
 
     /**
-     * Rejects a flag that appears more than once.
+     * Returns the index of {@code flag}, requiring it exactly once.
      *
      * @param text Argument text to scan.
      * @param flag Flag such as {@code /by}.
-     * @throws MouseException If {@code flag} occurs more than once.
+     * @param missingMessage Error if {@code flag} is absent.
+     * @return Index of {@code flag} in {@code text}.
+     * @throws MouseException If {@code flag} is missing or repeated.
      */
-    private static void assertSingleFlag(String text, String flag) throws MouseException {
+    private static int indexOfSingleFlag(String text, String flag, String missingMessage)
+            throws MouseException {
         if (countOccurrences(text, flag) > 1) {
             throw new MouseException("Use " + flag + " only once GRR");
         }
+        int index = text.indexOf(flag);
+        if (index == -1) {
+            throw new MouseException(missingMessage);
+        }
+        return index;
+    }
+
+    /**
+     * Returns a trimmed slice, rejecting blanks.
+     *
+     * @param text Source text.
+     * @param start Start index, inclusive.
+     * @param end End index, exclusive.
+     * @param emptyMessage Error if the slice is blank.
+     * @return Trimmed slice.
+     * @throws MouseException If the slice is blank.
+     */
+    private static String requireSlice(String text, int start, int end, String emptyMessage)
+            throws MouseException {
+        String value = text.substring(start, end).trim();
+        if (value.isEmpty()) {
+            throw new MouseException(emptyMessage);
+        }
+        return value;
     }
 
     /**
