@@ -26,6 +26,12 @@ public class DialogBox extends HBox {
     @FXML
     private ImageView displayPicture;
 
+    /**
+     * Creates a dialog row and loads its FXML layout.
+     *
+     * @param text Bubble text.
+     * @param img Face image to show, if the avatar stays visible.
+     */
     private DialogBox(String text, Image img) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MainWindow.class.getResource("/view/DialogBox.fxml"));

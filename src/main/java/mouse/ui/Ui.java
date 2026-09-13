@@ -283,23 +283,55 @@ public class Ui {
         System.out.println(LINE);
     }
 
+    /**
+     * Returns the stash-size line with singular or plural wording.
+     *
+     * @param taskCount Number of tasks now stored.
+     * @return Count sentence.
+     */
     private String formatStashCount(int taskCount) {
         String crumbWord = taskCount == 1 ? "crumb" : "crumbs";
         return "The stash now holds " + taskCount + " " + crumbWord + ".";
     }
 
+    /**
+     * Returns a header plus one numbered line per task.
+     *
+     * @param header First line of the reply.
+     * @param tasks Tasks to list.
+     * @return Joined list text.
+     */
     private String formatNumberedTasks(String header, TaskList tasks) {
         return joinLines(numberedLines(header, tasks));
     }
 
+    /**
+     * Joins {@code lines} with newlines.
+     *
+     * @param lines Lines to join.
+     * @return Single multiline string.
+     */
     private String joinLines(String... lines) {
         return String.join("\n", lines);
     }
 
+    /**
+     * Splits {@code text} into lines, keeping empty trailing lines.
+     *
+     * @param text Multiline text.
+     * @return Individual lines.
+     */
     private String[] splitLines(String text) {
         return text.split("\n", -1);
     }
 
+    /**
+     * Builds a header line plus {@code 1.task} lines for {@code tasks}.
+     *
+     * @param header First line of the reply.
+     * @param tasks Tasks to number.
+     * @return Header and numbered task lines.
+     */
     private String[] numberedLines(String header, TaskList tasks) {
         String[] lines = new String[tasks.size() + 1];
         lines[0] = header;
@@ -309,6 +341,13 @@ public class Ui {
         return lines;
     }
 
+    /**
+     * Concatenates {@code prefix} and {@code extra} into one array.
+     *
+     * @param prefix Leading lines.
+     * @param extra Lines to append.
+     * @return Combined lines.
+     */
     private String[] append(String[] prefix, String... extra) {
         String[] result = new String[prefix.length + extra.length];
         System.arraycopy(prefix, 0, result, 0, prefix.length);

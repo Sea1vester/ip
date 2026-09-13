@@ -105,6 +105,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns a task decoded from one save-file line, or {@code null} if invalid.
+     *
+     * @param line Encoded task line.
+     * @return Decoded task, or {@code null} to skip the line.
+     */
     private static Task decode(String line) {
         if (line == null || line.isBlank()) {
             return null;
@@ -135,6 +141,14 @@ public class Storage {
         }
     }
 
+    /**
+     * Returns a task of {@code type} built from the split save-file fields.
+     *
+     * @param type Task type letter.
+     * @param parts Fields split on {@code |}.
+     * @return Decoded task, or {@code null} if the type or field count is wrong.
+     * @throws MouseException If a dated field is invalid.
+     */
     private static Task decodeTask(String type, String[] parts) throws MouseException {
         switch (type) {
         case "T":
@@ -155,6 +169,14 @@ public class Storage {
         }
     }
 
+    /**
+     * Joins {@code parts[from]} through {@code parts[to - 1]} with {@code |}.
+     *
+     * @param parts Split save-file fields.
+     * @param from Start index, inclusive.
+     * @param to End index, exclusive.
+     * @return Joined description text.
+     */
     private static String join(String[] parts, int from, int to) {
         return String.join(" | ", Arrays.copyOfRange(parts, from, to));
     }

@@ -177,6 +177,13 @@ public class Parser {
         }
     }
 
+    /**
+     * Returns the trimmed text after {@code commandWord}.
+     *
+     * @param input Full command line.
+     * @param commandWord Leading command word.
+     * @return Remaining argument text, or an empty string.
+     */
     private static String restAfter(String input, String commandWord) {
         String trimmed = input.trim();
         if (trimmed.length() == commandWord.length()) {
@@ -185,12 +192,26 @@ public class Parser {
         return trimmed.substring(commandWord.length()).trim();
     }
 
+    /**
+     * Rejects a flag that appears more than once.
+     *
+     * @param text Argument text to scan.
+     * @param flag Flag such as {@code /by}.
+     * @throws MouseException If {@code flag} occurs more than once.
+     */
     private static void assertSingleFlag(String text, String flag) throws MouseException {
         if (countOccurrences(text, flag) > 1) {
             throw new MouseException("Use " + flag + " only once GRR");
         }
     }
 
+    /**
+     * Returns how many times {@code token} appears in {@code text}.
+     *
+     * @param text Text to scan.
+     * @param token Substring to count.
+     * @return Number of non-overlapping matches.
+     */
     private static int countOccurrences(String text, String token) {
         int count = 0;
         int from = 0;

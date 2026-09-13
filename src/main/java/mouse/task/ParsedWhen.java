@@ -34,6 +34,13 @@ public class ParsedWhen {
     private final LocalDate date;
     private final String text;
 
+    /**
+     * Creates a parsed time that holds exactly one of date-time, date, or free text.
+     *
+     * @param dateTime Parsed date-time, or {@code null}.
+     * @param date Parsed date, or {@code null}.
+     * @param text Free-text value, or {@code null}.
+     */
     private ParsedWhen(LocalDateTime dateTime, LocalDate date, String text) {
         this.dateTime = dateTime;
         this.date = date;
@@ -113,10 +120,21 @@ public class ParsedWhen {
         return text;
     }
 
+    /**
+     * Returns whether this value is undated free text.
+     *
+     * @return {@code true} if no calendar date was parsed.
+     */
     private boolean isFreeText() {
         return text != null;
     }
 
+    /**
+     * Returns this value as a date-time for ordering.
+     * Dates without a time use the start of that day.
+     *
+     * @return Comparable date-time.
+     */
     private LocalDateTime toDateTime() {
         if (dateTime != null) {
             return dateTime;
@@ -124,18 +142,43 @@ public class ParsedWhen {
         return date.atStartOfDay();
     }
 
+    /**
+     * Returns whether {@code raw} matches an ISO or slash date pattern.
+     *
+     * @param raw User-supplied time text.
+     * @return {@code true} if the text looks like a date.
+     */
     private static boolean looksLikeDate(String raw) {
         return ISO_LIKE.matcher(raw).matches() || SLASH_LIKE.matcher(raw).matches();
     }
 
+    /**
+     * Tries to parse {@code raw} as a date-time.
+     *
+     * @param raw User-supplied time text.
+     * @return Parsed date-time, or {@code null}.
+     */
     private static LocalDateTime tryDateTime(String raw) {
         return parseDateTime(raw, DATE_TIME_IN, DATE_TIME_IN_SLASH);
     }
 
+    /**
+     * Tries to parse {@code raw} as a date.
+     *
+     * @param raw User-supplied time text.
+     * @return Parsed date, or {@code null}.
+     */
     private static LocalDate tryDate(String raw) {
         return parseDate(raw, DATE_IN, DATE_IN_SLASH);
     }
 
+    /**
+     * Tries each date-time formatter until one accepts {@code raw}.
+     *
+     * @param raw User-supplied time text.
+     * @param formatters Formatters to try in order.
+     * @return Parsed date-time, or {@code null}.
+     */
     private static LocalDateTime parseDateTime(String raw, DateTimeFormatter... formatters) {
         for (DateTimeFormatter formatter : formatters) {
             try {
@@ -147,6 +190,13 @@ public class ParsedWhen {
         return null;
     }
 
+    /**
+     * Tries each date formatter until one accepts {@code raw}.
+     *
+     * @param raw User-supplied time text.
+     * @param formatters Formatters to try in order.
+     * @return Parsed date, or {@code null}.
+     */
     private static LocalDate parseDate(String raw, DateTimeFormatter... formatters) {
         for (DateTimeFormatter formatter : formatters) {
             try {

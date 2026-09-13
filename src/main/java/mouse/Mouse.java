@@ -175,12 +175,27 @@ public class Mouse {
         }
     }
 
+    /**
+     * Adds {@code task} to the stash, saves, and returns the confirmation.
+     *
+     * @param task Task to add.
+     * @return Confirmation text.
+     * @throws MouseException If the crumb is a duplicate or cannot be saved.
+     */
     private String addTask(Task task) throws MouseException {
         Task added = tasks.add(task);
         storage.save(tasks);
         return ui.formatAdded(added, tasks.size());
     }
 
+    /**
+     * Saves after a mark, unmark, or priority change and formats the reply.
+     *
+     * @param task Updated task.
+     * @param formatter Builds the reply from {@code task}.
+     * @return Formatted confirmation.
+     * @throws MouseException If the stash cannot be saved.
+     */
     private String changeTask(Task task, Function<Task, String> formatter) throws MouseException {
         storage.save(tasks);
         return formatter.apply(task);

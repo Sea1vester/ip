@@ -16,6 +16,12 @@ public class Main extends Application {
     private final Mouse mouse = new Mouse();
 
     /**
+     * Creates the JavaFX application with a default Mouse session.
+     */
+    public Main() {
+    }
+
+    /**
      * Loads the main window and shows the stage.
      *
      * @param stage Primary stage provided by JavaFX.

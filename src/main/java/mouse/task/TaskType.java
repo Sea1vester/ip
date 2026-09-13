@@ -10,6 +10,11 @@ public enum TaskType {
 
     private final String symbol;
 
+    /**
+     * Creates a task type with the given list symbol.
+     *
+     * @param symbol Single-letter type symbol.
+     */
     TaskType(String symbol) {
         this.symbol = symbol;
     }
