@@ -30,6 +30,12 @@ The JAR and `./gradlew run` start the GUI via `mouse.Launcher`.
 
 Tasks are saved to `data/mouse.txt`.
 
+## AI use
+
+Cursor was used as a collaborator on Week 6 work (GUI polish, personality wording,
+extra error handling, extra tests, and User Guide edits).
+I chose the product behaviour and reviewed the generated changes before keeping them.
+
 ## Credits
 
 GUI scaffolding follows the [SE-EDU JavaFX tutorial](https://se-education.org/guides/tutorials/javaFx.html)

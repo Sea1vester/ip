@@ -12,12 +12,7 @@ Tasks are saved to `data/mouse.txt` so they come back the next time you open Mou
 1. Install **Java 25**.
 2. Download `mouse.jar` from the [latest release](https://github.com/Sea1vester/ip/releases).
 3. Copy the JAR into an empty folder.
-4. In a terminal, run:
-
-```
-java -jar mouse.jar
-```
-
+4. In a terminal, run `java -jar mouse.jar`.
 5. Type a command and press Enter, or click **Stash**.
 6. Type `help` to see the command list.
 7. Type `bye` to exit.
